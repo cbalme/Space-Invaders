@@ -6,7 +6,10 @@
 package space.invaders;
 
 import environment.Environment;
+import grid.Grid;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -15,7 +18,13 @@ import java.awt.event.MouseEvent;
  * @author Oliver
  */
 public class Space extends Environment {
-
+    
+    Grid grid;
+    
+    public Space(){
+        grid = new Grid(20, 20, 30, 30, new Point(20, 50), Color.yellow);
+    }
+            
     @Override
     public void initializeEnvironment() {
 
@@ -53,27 +62,21 @@ public class Space extends Environment {
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
             System.out.println("Key Released - Right");
-            
-          
-            @Override
-            public void environmentMouseClicked
-            (MouseEvent e
-        
-            
-                ) {
-        System.out.println("Mouse clicked at " + e.getPoint());
-                System.out.println("Mouse clicked in cell" + grid.getCellLocationFromSystemCoordinate);
-            }
-
-            @Override
-            public void paintEnvironment
-            (Graphics graphics
-        
-            
-                ) {
-        if (grid != null) {
-                    grid.paintComponent(graphics);
-                }
-            }
-
         }
+        if (e.getKeyCode() == KeyEvent.VK_S) {
+            System.out.println("Key Released - DOWN");
+        }
+    }
+
+    @Override
+    public void environmentMouseClicked(MouseEvent e) {
+        System.out.println("Mouse clicked at " + e.getPoint());
+    }
+
+    @Override
+    public void paintEnvironment(Graphics graphics) {
+        if (grid != null) {
+            grid.paintComponent(graphics);
+        }
+    }
+}
