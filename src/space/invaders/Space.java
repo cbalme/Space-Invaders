@@ -43,13 +43,15 @@ public class Space extends Environment {
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             System.out.println("GO LEFT");
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            System.out.println("up");
+            System.out.println("GO UP");
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            System.out.println("down");
+            System.out.println("GO DOWN");
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            System.out.println("right");
+            System.out.println("GO RIGHT");
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+            System.out.println("SPACE BAR");
         }
-
+        
     }
 
     @Override
@@ -58,10 +60,10 @@ public class Space extends Environment {
             System.out.println("Key Released - UP");
         }
         if (e.getKeyCode() == KeyEvent.VK_A) {
-            System.out.println("Key Released - Left");
+            System.out.println("Key Released - LEFT");
         }
         if (e.getKeyCode() == KeyEvent.VK_D) {
-            System.out.println("Key Released - Right");
+            System.out.println("Key Released - RIGHT");
         }
         if (e.getKeyCode() == KeyEvent.VK_S) {
             System.out.println("Key Released - DOWN");
