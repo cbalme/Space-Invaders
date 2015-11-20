@@ -18,6 +18,10 @@ public class FarmerJohn {
     Image john;
     public void draw(Graphics graphics){
         
-    john=ResourceTools.loadImageFromResource(Farmer John (1).png);
+    john=ResourceTools.loadImageFromResource("space.invaders/Farmer John(1).png");
+        if (john !=null) {
+            graphics.drawImage(john, 20, 30, null);
+            
+        }
     }
 }

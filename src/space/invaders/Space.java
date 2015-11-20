@@ -7,8 +7,10 @@ package space.invaders;
 
 import environment.Environment;
 import grid.Grid;
+import images.ResourceTools;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -20,11 +22,12 @@ import java.awt.event.MouseEvent;
 public class Space extends Environment {
     
     Grid grid;
-    
+    private FarmerJohn john;
     public Space(){
         grid = new Grid(20, 20, 30, 30, new Point(20, 50), Color.yellow);
+        john = ResourceTools.loadImageFromResource("space.invaders/Farmer John (1).png");
     }
-            
+       
     @Override
     public void initializeEnvironment() {
 
@@ -79,6 +82,9 @@ public class Space extends Environment {
     public void paintEnvironment(Graphics graphics) {
         if (grid != null) {
             grid.paintComponent(graphics);
+        }
+        if (john != null){
+            graphics.drawImage(john, 4, 2, this);
         }
     }
 }
