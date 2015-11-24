@@ -14,13 +14,21 @@ import java.awt.Image;
  * @author Oliver
  */
 public class FarmerJohn {
+    public FarmerJohn(Image image, int x, int y){
+       this.john = image;
+       this.x = x;
+       this.y = y;
+       
+    }
     
     Image john;
+    int x;
+    int y;
+    
     public void draw(Graphics graphics){
         
-    john=ResourceTools.loadImageFromResource("space.invaders/Farmer John(1).png");
         if (john !=null) {
-            graphics.drawImage(john, 20, 30, null);
+            graphics.drawImage(john, x, y, null);
             
         }
     }

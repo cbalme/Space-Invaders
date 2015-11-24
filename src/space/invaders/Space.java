@@ -19,15 +19,24 @@ import java.awt.event.MouseEvent;
  *
  * @author Oliver
  */
-public class Space extends Environment {
-    
+public class Space extends Environment implements CellDataProviderIntf {
+
     Grid grid;
-    private FarmerJohn john;
-    public Space(){
+    FarmerJohn john;
+    Image image;
+    int x;
+    int y;
+    private Barrier myBarrier;
+
+    public Space() {
+        x = 30;
+        y = 40;
         grid = new Grid(20, 20, 30, 30, new Point(20, 50), Color.yellow);
-        john = ResourceTools.loadImageFromResource("space.invaders/Farmer John (1).png");
+        image = ResourceTools.loadImageFromResource("space.invaders/FarmerJohn.png");
+        this.setBackground(Color.blue);
+        john = new FarmerJohn(image, x, y);
     }
-       
+
     @Override
     public void initializeEnvironment() {
 
@@ -51,10 +60,10 @@ public class Space extends Environment {
             System.out.println("GO DOWN");
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             System.out.println("GO RIGHT");
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println("SPACE BAR");
         }
-        
+
     }
 
     @Override
@@ -83,8 +92,30 @@ public class Space extends Environment {
         if (grid != null) {
             grid.paintComponent(graphics);
         }
-        if (john != null){
-            graphics.drawImage(john, 4, 2, this);
+        if (john != null) {
+            john.draw(graphics);
         }
     }
+
+//<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">
+    @Override
+    public int getCellWidth() {
+        return grid.getCellWidth();
+    }
+    
+    @Override
+    public int getCellHeight() {
+        return grid.getCellHeight();
+    }
+    
+    @Override
+    public int getSystemCoordX(int x, int y) {
+        return grid.getCellSystemCoordinate(x, y).x;
+    }
+    
+    @Override
+    public int getSystemCoordY(int x, int y) {
+        return grid.getCellSystemCoordinate(x, y).y;
+    }
+//</editor-fold>
 }
