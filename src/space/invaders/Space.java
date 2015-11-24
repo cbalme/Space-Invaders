@@ -35,6 +35,7 @@ public class Space extends Environment implements CellDataProviderIntf {
         image = ResourceTools.loadImageFromResource("space.invaders/FarmerJohn.png");
         this.setBackground(Color.blue);
         john = new FarmerJohn(image, x, y);
+        myBarrier = new Barrier(10, 15, Color.green, this, true);
     }
 
     @Override
@@ -94,6 +95,9 @@ public class Space extends Environment implements CellDataProviderIntf {
         }
         if (john != null) {
             john.draw(graphics);
+        }
+        if (myBarrier!= null){
+            myBarrier.draw(graphics);
         }
     }
 
