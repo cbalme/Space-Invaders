@@ -14,28 +14,37 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  *
  * @author Oliver
  */
-public class Space extends Environment implements CellDataProviderIntf {
+public class Space extends Environment implements CellDataProviderIntf, MoveValidatorIntf {
 
     Grid grid;
-    FarmerJohn john;
+//    FarmerJohn john;
     Image image;
     int x;
     int y;
-    private Barrier myBarrier;
+    private ArrayList<Barrier> barriers;
 
     public Space() {
         x = 30;
         y = 40;
-        grid = new Grid(20, 20, 30, 30, new Point(20, 50), Color.yellow);
-        image = ResourceTools.loadImageFromResource("space.invaders/FarmerJohn.png");
-        this.setBackground(Color.blue);
-        john = new FarmerJohn(image, x, y);
-        myBarrier = new Barrier(10, 15, Color.green, this, true);
+        grid = new Grid(20, 20, 30, 30, new Point(20, 50), new Color(0, 102, 0));
+//        image = ResourceTools.loadImageFromResource("space.invaders/FarmerJohn.png");
+        this.setBackground(new Color(0, 153, 153));
+//        john = new FarmerJohn(image, x, y, grid, this);
+
+//        myBarrier = new Barrier(10, 15, Color.green, this, true);
+        barriers = new ArrayList<>();
+        barriers.add(new Barrier(0, 0, Color.green, this, false));
+        barriers.add(new Barrier(1, 0, Color.green, this, false));
+        barriers.add(new Barrier(2, 0, Color.green, this, false));
+        barriers.add(new Barrier(3, 0, Color.green, this, false));
+        barriers.add(new Barrier(5, 7, Color.green, this, false));
+        barriers.add(new Barrier(3, 4, Color.green, this, false));
     }
 
     @Override
@@ -93,11 +102,16 @@ public class Space extends Environment implements CellDataProviderIntf {
         if (grid != null) {
             grid.paintComponent(graphics);
         }
-        if (john != null) {
-            john.draw(graphics);
-        }
-        if (myBarrier!= null){
-            myBarrier.draw(graphics);
+//        if (john != null) {
+//            john.draw(graphics);
+//        }
+//        if (myBarrier != null) {
+//            myBarrier.draw(graphics);
+//        }
+        if(barriers != null){
+            for (int i = 0; i < barriers.size(); i++) {
+                barriers.get(i).draw(graphics);
+            }
         }
     }
 
@@ -106,20 +120,31 @@ public class Space extends Environment implements CellDataProviderIntf {
     public int getCellWidth() {
         return grid.getCellWidth();
     }
-    
+
     @Override
     public int getCellHeight() {
         return grid.getCellHeight();
     }
-    
+
     @Override
     public int getSystemCoordX(int x, int y) {
         return grid.getCellSystemCoordinate(x, y).x;
     }
-    
+
     @Override
     public int getSystemCoordY(int x, int y) {
         return grid.getCellSystemCoordinate(x, y).y;
+    }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="MoveValidatorIntf">
+    @Override
+    public Point validateMove(Point proposedLocation) {
+        if (proposedLocation.x < 0) {
+            System.out.println("OUT OF BOUNDS!!");
+        }
+
+        return proposedLocation;
     }
 //</editor-fold>
 }

@@ -17,7 +17,7 @@ public class Barrier {
 //<editor-fold defaultstate="collapsed" desc="Drawing">
     public void draw(Graphics graphics){
         graphics.setColor(color);
-        graphics.draw3DRect(cellData.getSystemCoordX(x, y), cellData.getSystemCoordY(x, y), cellData.getCellWidth(), cellData.getCellHeight(), true);
+        graphics.fill3DRect(cellData.getSystemCoordX(x, y), cellData.getSystemCoordY(x, y), cellData.getCellWidth(), cellData.getCellHeight(), true);
     }
     
 //</editor-fold>

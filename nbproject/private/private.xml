@@ -5,7 +5,10 @@
         <group>
             <file>file:/C:/Users/Oliver/Documents/NetBeansProjects/Space%20Invaders/src/space/invaders/FarmerJohn.java</file>
             <file>file:/C:/Users/Oliver/Documents/NetBeansProjects/Space%20Invaders/src/space/invaders/SpaceInvaders.java</file>
+            <file>file:/C:/Users/Oliver/Documents/NetBeansProjects/Space%20Invaders/src/space/invaders/Barrier.java</file>
+            <file>file:/C:/Users/Oliver/Documents/NetBeansProjects/Space%20Invaders/src/space/invaders/CellDataProviderIntf.java</file>
             <file>file:/C:/Users/Oliver/Documents/NetBeansProjects/Space%20Invaders/src/space/invaders/Space.java</file>
+            <file>file:/C:/Users/Oliver/Documents/NetBeansProjects/Space%20Invaders/src/space/invaders/MoveValidatorIntf.java</file>
         </group>
     </open-files>
 </project-private>
