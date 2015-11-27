@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package space.invaders;
+package spaceinvaders;
 
 import grid.Grid;
 import images.ResourceTools;
@@ -38,10 +38,6 @@ public class FarmerJohn {
     Image john;
     int x;
     int y;
-
-    FarmerJohn(Image image, int x, int y, Grid grid, Space aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public void draw(Graphics graphics){
         

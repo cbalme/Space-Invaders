@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package space.invaders;
+package spaceinvaders;
 
 import environment.Environment;
 import grid.Grid;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class Space extends Environment implements CellDataProviderIntf, MoveValidatorIntf {
 
     Grid grid;
-//    FarmerJohn john;
+    FarmerJohn john;
     Image image;
     int x;
     int y;
@@ -33,9 +33,10 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
         x = 30;
         y = 40;
         grid = new Grid(20, 20, 30, 30, new Point(20, 50), new Color(0, 102, 0));
-//        image = ResourceTools.loadImageFromResource("space.invaders/FarmerJohn.png");
+//        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(new Color(0, 153, 153));
-//        john = new FarmerJohn(image, x, y, grid, this);
+        john = new FarmerJohn(image, 30, 40, grid, this);
 
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
@@ -102,12 +103,10 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
         if (grid != null) {
             grid.paintComponent(graphics);
         }
-//        if (john != null) {
-//            john.draw(graphics);
-//        }
-//        if (myBarrier != null) {
-//            myBarrier.draw(graphics);
-//        }
+        if (john != null) {
+            john.draw(graphics);
+        }
+
         if(barriers != null){
             for (int i = 0; i < barriers.size(); i++) {
                 barriers.get(i).draw(graphics);
