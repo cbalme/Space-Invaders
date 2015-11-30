@@ -5,6 +5,7 @@
  */
 package spaceinvaders;
 
+import environment.Direction;
 import environment.Environment;
 import grid.Grid;
 import images.ResourceTools;
@@ -36,7 +37,7 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(new Color(0, 153, 153));
-        john = new FarmerJohn(image, 30, 40, grid, this);
+        john = new FarmerJohn(image, 200, 140, grid, this);
 
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
@@ -64,12 +65,16 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
 //        System.out.println("Key Event" + e.getKeyChar());
 //        System.out.println("Key Event" + e.getKeyCode());
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            john.setDirection(Direction.LEFT);
+            john.move(100);
             System.out.println("GO LEFT");
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
             System.out.println("GO UP");
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
             System.out.println("GO DOWN");
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            john.setDirection(Direction.RIGHT);
+            john.move(100);
             System.out.println("GO RIGHT");
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println("SPACE BAR");

@@ -5,6 +5,7 @@
  */
 package spaceinvaders;
 
+import environment.Direction;
 import grid.Grid;
 import images.ResourceTools;
 import java.awt.Graphics;
@@ -36,6 +37,7 @@ public class FarmerJohn {
     }
     
     Image john;
+    private Direction direction;
     int x;
     int y;
     
@@ -46,4 +48,28 @@ public class FarmerJohn {
             
         }
     }
+   public void move(int move){
+        if (getDirection() == Direction.RIGHT) {
+           x++;
+       }
+        if (getDirection() == Direction.LEFT) {
+           x--;
+       }
+    }
+
+    /**
+     * @return the direction
+     */
+    public Direction getDirection() {
+        return direction;
+    }
+
+    /**
+     * @param direction the direction to set
+     */
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+    
+    
 }
