@@ -24,11 +24,13 @@ import java.util.ArrayList;
 public class Space extends Environment implements CellDataProviderIntf, MoveValidatorIntf {
 
     Grid grid;
+    Bullet bullet;
     FarmerJohn john;
     Image image;
     int x;
     int y;
     private ArrayList<Barrier> barriers;
+    private ArrayList<Bullet> bullets;
 
     public Space() {
         x = 30;
@@ -37,7 +39,7 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(new Color(0, 153, 153));
-        john = new FarmerJohn(image, 200, 140, grid, this);
+        john = new FarmerJohn(image, 140, 200, grid, this);
 
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
@@ -47,6 +49,8 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
         barriers.add(new Barrier(3, 0, Color.green, this, false));
         barriers.add(new Barrier(5, 7, Color.green, this, false));
         barriers.add(new Barrier(3, 4, Color.green, this, false));
+
+        bullets = new ArrayList<>();
     }
 
     @Override
@@ -57,6 +61,9 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
 
     @Override
     public void timerTaskHandler() {
+        if (bullets != null) {
+//            bullet.move(10);
+        }
 //        System.out.println("Hey dude.." + ++counter);
     }
 
@@ -66,17 +73,18 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
 //        System.out.println("Key Event" + e.getKeyCode());
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             john.setDirection(Direction.LEFT);
-            john.move(100);
-            System.out.println("GO LEFT");
+            john.move(5);
         } else if (e.getKeyCode() == KeyEvent.VK_UP) {
-            System.out.println("GO UP");
+            john.setDirection(Direction.UP);
+            john.move(5);
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            System.out.println("GO DOWN");
+            john.setDirection(Direction.DOWN);
+            john.move(5);
         } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             john.setDirection(Direction.RIGHT);
-            john.move(100);
-            System.out.println("GO RIGHT");
+            john.move(5);
         } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            bullets.add(new Bullet(john.x, john.y));
             System.out.println("SPACE BAR");
         }
 
@@ -108,11 +116,17 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
         if (grid != null) {
             grid.paintComponent(graphics);
         }
+        if (bullets != null) {
+            for (Bullet bullet : bullets) {
+                bullet.draw(graphics);
+            }
+        }
+
         if (john != null) {
             john.draw(graphics);
         }
 
-        if(barriers != null){
+        if (barriers != null) {
             for (int i = 0; i < barriers.size(); i++) {
                 barriers.get(i).draw(graphics);
             }

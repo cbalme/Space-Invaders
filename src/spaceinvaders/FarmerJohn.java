@@ -27,34 +27,42 @@ public class FarmerJohn {
      * @param y
      * @param validator
      */
-    public FarmerJohn(Image image, int x, int y, Grid grid, MoveValidatorIntf validator){
-       this.john = image;
-       this.x = x;
-       this.y = y;
-       this.grid = grid;
-       this.validator = validator;
-       
+    public FarmerJohn(Image image, int x, int y, Grid grid, MoveValidatorIntf validator) {
+        this.john = image;
+        this.x = x;
+        this.y = y;
+        this.grid = grid;
+        this.validator = validator;
+
     }
-    
+
     Image john;
     private Direction direction;
+    private int speed;
     int x;
     int y;
-    
-    public void draw(Graphics graphics){
-        
-        if (john !=null) {
+
+    public void draw(Graphics graphics) {
+
+        if (john != null) {
             graphics.drawImage(john, x, y, null);
-            
+
         }
     }
-   public void move(int move){
+
+    public void move(int move) {
         if (getDirection() == Direction.RIGHT) {
-           x++;
-       }
+            x += move;
+        }
         if (getDirection() == Direction.LEFT) {
-           x--;
-       }
+            x -= move;
+        }
+        if (getDirection() == Direction.UP) {
+            y -= move;
+        }
+        if (getDirection() == Direction.DOWN) {
+            y += move;
+        }
     }
 
     /**
@@ -70,6 +78,19 @@ public class FarmerJohn {
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
-    
-    
+
+    /**
+     * @return the speed
+     */
+    public int getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed the speed to set
+     */
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
 }
