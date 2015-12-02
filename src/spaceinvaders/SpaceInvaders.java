@@ -18,7 +18,7 @@ public class SpaceInvaders {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        ApplicationStarter.run("THE SPACE", new Space());
+        ApplicationStarter.run("THE SPACE", new Field());
     }
 
 }

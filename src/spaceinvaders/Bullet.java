@@ -6,6 +6,7 @@
 package spaceinvaders;
 
 import environment.Direction;
+import environment.Velocity;
 import java.awt.Graphics;
 
 /**
@@ -13,67 +14,71 @@ import java.awt.Graphics;
  * @author Oliver
  */
 public class Bullet {
-    public Bullet(int x, int y){
-        this.x=x;
-        this.y=y;
+
+
+    public Bullet(int x, int y, Velocity velocity) {
+        this.x = x;
+        this.y = y;
+        this.velocity = velocity;
     }
-    public void move(int speed){
-            x -= speed;
+
+    public void move() {
+        x += velocity.x;
+        y += velocity.y;
+        
     }
-    public void draw(Graphics graphics){
-        graphics.fillRect(x, y, 10, 10);
+
+    public void draw(Graphics graphics) {
+        graphics.fillRect(x, y, 300, 100);
     }
-    
-    
-    
-    
-private int x; 
-private int y;
-private int speed;
 
 //<editor-fold defaultstate="collapsed" desc="Properties">
-/**
- * @return the x
- */
-public int getX() {
-    return x;
-}
+    private int x;
+    private int y;
+    private int speed;
+    private final Velocity velocity;
 
-/**
- * @param x the x to set
- */
-public void setX(int x) {
-    this.x = x;
-}
+    /**
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
 
-/**
- * @return the y
- */
-public int getY() {
-    return y;
-}
+    /**
+     * @param x the x to set
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
 
-/**
- * @param y the y to set
- */
-public void setY(int y) {
-    this.y = y;
-}
+    /**
+     * @return the y
+     */
+    public int getY() {
+        return y;
+    }
 
-/**
- * @return the speed
- */
-public int getSpeed() {
-    return speed;
-}
+    /**
+     * @param y the y to set
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
 
-/**
- * @param speed the speed to set
- */
-public void setSpeed(int speed) {
-    this.speed = speed;
-}
+    /**
+     * @return the speed
+     */
+    public int getSpeed() {
+        return speed;
+    }
+
+    /**
+     * @param speed the speed to set
+     */
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
 //</editor-fold>
-
 
 }

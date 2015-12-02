@@ -7,6 +7,7 @@ package spaceinvaders;
 
 import environment.Direction;
 import environment.Environment;
+import environment.Velocity;
 import grid.Grid;
 import images.ResourceTools;
 import java.awt.Color;
@@ -16,12 +17,13 @@ import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import path.TrigonometryCalculator;
 
 /**
  *
  * @author Oliver
  */
-public class Space extends Environment implements CellDataProviderIntf, MoveValidatorIntf {
+public class Field extends Environment implements CellDataProviderIntf, MoveValidatorIntf {
 
     Grid grid;
     Bullet bullet;
@@ -32,7 +34,7 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
     private ArrayList<Barrier> barriers;
     private ArrayList<Bullet> bullets;
 
-    public Space() {
+    public Field() {
         x = 30;
         y = 40;
         grid = new Grid(20, 20, 30, 30, new Point(20, 50), new Color(0, 102, 0));
@@ -62,53 +64,42 @@ public class Space extends Environment implements CellDataProviderIntf, MoveVali
     @Override
     public void timerTaskHandler() {
         if (bullets != null) {
-//            bullet.move(10);
+            for (Bullet bullet : bullets) {
+                bullet.move();
+            }
         }
 //        System.out.println("Hey dude.." + ++counter);
     }
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
-//        System.out.println("Key Event" + e.getKeyChar());
-//        System.out.println("Key Event" + e.getKeyCode());
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
             john.setDirection(Direction.LEFT);
             john.move(5);
-        } else if (e.getKeyCode() == KeyEvent.VK_UP) {
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
             john.setDirection(Direction.UP);
             john.move(5);
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
             john.setDirection(Direction.DOWN);
             john.move(5);
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
             john.setDirection(Direction.RIGHT);
             john.move(5);
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            bullets.add(new Bullet(john.x, john.y));
-            System.out.println("SPACE BAR");
         }
-
     }
 
     @Override
     public void keyReleasedHandler(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_W) {
-            System.out.println("Key Released - UP");
-        }
-        if (e.getKeyCode() == KeyEvent.VK_A) {
-            System.out.println("Key Released - LEFT");
-        }
-        if (e.getKeyCode() == KeyEvent.VK_D) {
-            System.out.println("Key Released - RIGHT");
-        }
-        if (e.getKeyCode() == KeyEvent.VK_S) {
-            System.out.println("Key Released - DOWN");
-        }
+
     }
 
     @Override
     public void environmentMouseClicked(MouseEvent e) {
         System.out.println("Mouse clicked at " + e.getPoint());
+        
+        bullets.add(new Bullet(john.getX() + 13, john.getY() + 22, TrigonometryCalculator.calculateVelocity(john.getLocation(), e.getPoint(), 15)));
+        
+        
     }
 
     @Override

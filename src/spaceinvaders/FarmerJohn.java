@@ -10,15 +10,13 @@ import grid.Grid;
 import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 
 /**
  *
  * @author Oliver
  */
 public class FarmerJohn {
-
-    private final MoveValidatorIntf validator;
-    private Grid grid;
 
     /**
      *
@@ -36,34 +34,39 @@ public class FarmerJohn {
 
     }
 
-    Image john;
-    private Direction direction;
-    private int speed;
-    int x;
-    int y;
-
     public void draw(Graphics graphics) {
 
         if (john != null) {
-            graphics.drawImage(john, x, y, null);
+            graphics.drawImage(john, getX(), getY(), null);
 
         }
     }
 
     public void move(int move) {
         if (getDirection() == Direction.RIGHT) {
-            x += move;
+            setX(getX() + move);
         }
         if (getDirection() == Direction.LEFT) {
-            x -= move;
+            setX(getX() - move);
         }
         if (getDirection() == Direction.UP) {
-            y -= move;
+            setY(getY() - move);
         }
         if (getDirection() == Direction.DOWN) {
-            y += move;
+            setY(getY() + move);
         }
     }
+
+
+//<editor-fold defaultstate="collapsed" desc="Properties">
+    private final MoveValidatorIntf validator;
+    private Grid grid;
+    
+    Image john;
+    private Direction direction;
+    private int speed;
+    private int x;
+    private int y;
 
     /**
      * @return the direction
@@ -71,26 +74,61 @@ public class FarmerJohn {
     public Direction getDirection() {
         return direction;
     }
-
+    
     /**
      * @param direction the direction to set
      */
     public void setDirection(Direction direction) {
         this.direction = direction;
     }
-
+    
     /**
      * @return the speed
      */
     public int getSpeed() {
         return speed;
     }
-
+    
     /**
      * @param speed the speed to set
      */
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-
+    
+    /**
+     * @return the x
+     */
+    public int getX() {
+        return x;
+    }
+    
+    /**
+     * @param x the x to set
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    /**
+     * @return the y
+     */
+    public int getY() {
+        return y;
+    }
+    
+    /**
+     * @param y the y to set
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+    /**
+     * @return the Point that is JOhn's location
+     */
+    public Point getLocation() {
+        return new Point(x, y);
+    }
+    
+//</editor-fold>
 }
