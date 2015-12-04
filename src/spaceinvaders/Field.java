@@ -37,7 +37,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public Field() {
         x = 30;
         y = 40;
-        grid = new Grid(20, 20, 30, 30, new Point(20, 50), new Color(0, 102, 0));
+        grid = new Grid(20, 20, 25, 25, new Point(20, 50), new Color(0, 102, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(new Color(0, 153, 153));
@@ -45,12 +45,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
-        barriers.add(new Barrier(0, 0, Color.green, this, false));
-        barriers.add(new Barrier(1, 0, Color.green, this, false));
-        barriers.add(new Barrier(2, 0, Color.green, this, false));
-        barriers.add(new Barrier(3, 0, Color.green, this, false));
-        barriers.add(new Barrier(5, 7, Color.green, this, false));
-        barriers.add(new Barrier(3, 4, Color.green, this, false));
+        barriers.add(new Barrier(0, 19, Color.green, this, false));
+        barriers.add(new Barrier(1, 19, Color.green, this, false));
+        barriers.add(new Barrier(2, 19, Color.green, this, false));
+        barriers.add(new Barrier(3, 19, Color.green, this, false));
+        barriers.add(new Barrier(4, 19, Color.green, this, false));
+        barriers.add(new Barrier(5, 19, Color.green, this, false));
 
         bullets = new ArrayList<>();
     }
@@ -96,10 +96,9 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     @Override
     public void environmentMouseClicked(MouseEvent e) {
         System.out.println("Mouse clicked at " + e.getPoint());
-        
-        bullets.add(new Bullet(john.getX() + 13, john.getY() + 22, TrigonometryCalculator.calculateVelocity(john.getLocation(), e.getPoint(), 15)));
-        
-        
+
+        bullets.add(new Bullet(john.getX() + 11, john.getY() + 22, TrigonometryCalculator.calculateVelocity(john.getLocation(), e.getPoint(), 15)));
+
     }
 
     @Override

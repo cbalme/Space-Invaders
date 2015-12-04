@@ -15,7 +15,6 @@ import java.awt.Graphics;
  */
 public class Bullet {
 
-
     public Bullet(int x, int y, Velocity velocity) {
         this.x = x;
         this.y = y;
@@ -25,11 +24,11 @@ public class Bullet {
     public void move() {
         x += velocity.x;
         y += velocity.y;
-        
+
     }
 
     public void draw(Graphics graphics) {
-        graphics.fillRect(x, y, 300, 100);
+        graphics.fillRect(x, y, 4, 4);
     }
 
 //<editor-fold defaultstate="collapsed" desc="Properties">
