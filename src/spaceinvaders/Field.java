@@ -74,20 +74,24 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     @Override
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
-            john.setDirection(Direction.LEFT);
-            john.move(5);
+            moveFarmer(5, Direction.LEFT);
         } else if (e.getKeyCode() == KeyEvent.VK_W) {
-            john.setDirection(Direction.UP);
-            john.move(5);
+            moveFarmer(5, Direction.UP);
         } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            john.setDirection(Direction.DOWN);
-            john.move(5);
+            moveFarmer(5, Direction.DOWN);
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            john.setDirection(Direction.RIGHT);
-            john.move(5);
+            moveFarmer(5, Direction.RIGHT);
         }
     }
 
+    private void moveFarmer(int speed, Direction direction){
+        john.setDirection(direction);
+        john.move(speed);
+        
+        //check grid location
+    }
+    
+    
     @Override
     public void keyReleasedHandler(KeyEvent e) {
 

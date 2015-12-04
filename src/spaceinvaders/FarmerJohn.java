@@ -25,11 +25,9 @@ public class FarmerJohn {
      * @param y
      * @param validator
      */
-    private int x;
-    private int y;
-    private FarmerJohnState state = FarmerJohnState.Right;
+//    private FarmerJohnState state = FarmerJohnState.Right;
     private Image image;
-    private Animator animator;
+//    private Animator animator;
     public FarmerJohn(Image image, int x, int y, Grid grid, MoveValidatorIntf validator) {
         this.john = image;
         this.x = x;
@@ -39,10 +37,14 @@ public class FarmerJohn {
         loadImages();
 
     }
+    
+    private void loadImages(){
+        this.image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
+    }
 
     public void draw(Graphics graphics) {
 
-            graphics.drawImage(getImage, getX(), getY(), null);
+            graphics.drawImage(getImage(), getX(), getY(), null);
         
     }
     private static String STAND_LEFT = "STAND_LEFT";
@@ -50,33 +52,34 @@ public class FarmerJohn {
     private static String RUN_RIGHT = "STAND_RIGHT";
     private static String RUN_LEFT = "STAND_LEFT";
     
-    public void runRight(){
-        setState(FarmerJohnState.Run_Right);
-    }
-    public void runLeft(){
-        setState(FarmerJohnState.Run_Left);
-    }
-    public void stopRight(){
-        setState(FarmerJohnState.stop_Right);
-    }
-    public void stopLeft(){
-        setState(FarmerJohnState.stop_Left);
-    }
-    public void runUp(){
-        setState(FarmerJohnState.Run_Up);
-    }
-    public void runDown(){
-        setState(FarmerJohnState.Run_Down);
-    }
+//    public void runRight(){
+//        setState(FarmerJohnState.Run_Right);
+//    }
+//    public void runLeft(){
+//        setState(FarmerJohnState.Run_Left);
+//    }
+//    public void stopRight(){
+//        setState(FarmerJohnState.stop_Right);
+//    }
+//    public void stopLeft(){
+//        setState(FarmerJohnState.stop_Left);
+//    }
+//    public void runUp(){
+//        setState(FarmerJohnState.Run_Up);
+//    }
+//    public void runDown(){
+//        setState(FarmerJohnState.Run_Down);
+//    }
     
     
     private Image getImage(){
-        if (animator != null) {
-            return animator.getCurrentImage();
-        } else {
-            System.out.println("Broken");
+//        if (animator != null) {
+//            return animator.getCurrentImage();
+//        } else {
+//            System.out.println("Broken");
+//            return image;
+//        }
             return image;
-        }
     }
     
 
