@@ -7,6 +7,7 @@ package spaceinvaders;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 /**
  *
@@ -37,11 +38,21 @@ public class Barrier {
     private Color color;
     private boolean breakable = false;
     private CellDataProviderIntf cellData;
+    
+    
+    
     /**
      * @return the x
      */
     public int getX() {
         return x;
+    }
+    
+    /**
+     * @return the x
+     */
+    public Point getLocation() {
+        return new Point(x, y);
     }
     
     /**

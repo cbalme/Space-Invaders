@@ -84,14 +84,37 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         }
     }
 
-    private void moveFarmer(int speed, Direction direction){
-        john.setDirection(direction);
-        john.move(speed);
-        
-        //check grid location
+    private void moveFarmer(int speed, Direction direction) {
+        if (checkBarriers(grid.getCellLocationFromSystemCoordinate(john.getCalculatedLocation(speed, direction)))) {
+            System.out.println("HIT BARRIER");
+            java.awt.Toolkit.getDefaultToolkit().beep();
+        } else {
+            john.setDirection(direction);
+            john.move(speed);
+        }
     }
-    
-    
+
+    private boolean checkBarriers(Point location) {
+        for (Barrier barrier : barriers) {
+            if (barrier.getLocation().equals(location)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void checkIntersections() {
+        Point johnLocation = grid.getCellLocationFromSystemCoordinate(john.getCenterOfMass());
+        System.out.println("John Location " + johnLocation);
+
+        for (Barrier barrier : barriers) {
+            if (barrier.getLocation().equals(johnLocation)) {
+                System.out.println("HIT BARRIER");
+            }
+        }
+
+    }
+
     @Override
     public void keyReleasedHandler(KeyEvent e) {
 
@@ -116,15 +139,16 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             }
         }
 
-        if (john != null) {
-            john.draw(graphics);
-        }
-
         if (barriers != null) {
             for (int i = 0; i < barriers.size(); i++) {
                 barriers.get(i).draw(graphics);
             }
         }
+
+        if (john != null) {
+            john.draw(graphics);
+        }
+
     }
 
 //<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">

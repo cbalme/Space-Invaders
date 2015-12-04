@@ -28,6 +28,7 @@ public class FarmerJohn {
 //    private FarmerJohnState state = FarmerJohnState.Right;
     private Image image;
 //    private Animator animator;
+
     public FarmerJohn(Image image, int x, int y, Grid grid, MoveValidatorIntf validator) {
         this.john = image;
         this.x = x;
@@ -37,21 +38,21 @@ public class FarmerJohn {
         loadImages();
 
     }
-    
-    private void loadImages(){
+
+    private void loadImages() {
         this.image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
     }
 
     public void draw(Graphics graphics) {
 
-            graphics.drawImage(getImage(), getX(), getY(), null);
-        
+        graphics.drawImage(getImage(), getX(), getY(), null);
+
     }
     private static String STAND_LEFT = "STAND_LEFT";
     private static String STAND_RIGHT = "STAND_RIGHT";
     private static String RUN_RIGHT = "STAND_RIGHT";
     private static String RUN_LEFT = "STAND_LEFT";
-    
+
 //    public void runRight(){
 //        setState(FarmerJohnState.Run_Right);
 //    }
@@ -70,18 +71,15 @@ public class FarmerJohn {
 //    public void runDown(){
 //        setState(FarmerJohnState.Run_Down);
 //    }
-    
-    
-    private Image getImage(){
+    private Image getImage() {
 //        if (animator != null) {
 //            return animator.getCurrentImage();
 //        } else {
 //            System.out.println("Broken");
 //            return image;
 //        }
-            return image;
+        return image;
     }
-    
 
     public void move(int move) {
         if (getDirection() == Direction.RIGHT) {
@@ -171,5 +169,26 @@ public class FarmerJohn {
         return new Point(x, y);
     }
 
+    /**
+     * @return the Point that is JOhn's location
+     */
+    public Point getCenterOfMass() {
+        return new Point(x + (image.getWidth(null) / 2), y + (image.getHeight(null) / 2));
+    }
+
+    public Point getCalculatedLocation(int distance, Direction direction) {
+        Point com = getCenterOfMass();
+
+        if (direction == Direction.LEFT) {
+            com.x -= distance;
+        } else if (direction == Direction.RIGHT) {
+            com.x += distance;
+        } else if (direction == Direction.UP) {
+            com.y -= distance;
+        } else {
+            com.y += distance;
+        }
+        return com;
+    }
 //</editor-fold>
 }
