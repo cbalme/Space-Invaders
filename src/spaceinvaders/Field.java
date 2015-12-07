@@ -37,22 +37,29 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public Field() {
         x = 30;
         y = 40;
-        grid = new Grid(20, 20, 25, 25, new Point(20, 50), new Color(0, 102, 0));
+        grid = new Grid(28, 22, 25, 25, new Point(20, 10), new Color(0, 102, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(new Color(0, 153, 153));
-        john = new FarmerJohn(image, 140, 200, grid, this);
+        john = new FarmerJohn(image, 140, 270, grid, this);
 
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
-        barriers.add(new Barrier(0, 19, Color.green, this, false));
-        barriers.add(new Barrier(1, 19, Color.green, this, false));
-        barriers.add(new Barrier(2, 19, Color.green, this, false));
-        barriers.add(new Barrier(3, 19, Color.green, this, false));
-        barriers.add(new Barrier(4, 19, Color.green, this, false));
-        barriers.add(new Barrier(5, 19, Color.green, this, false));
-
+        createBarrierRange(0, 12, 27, 21, Color.GREEN, true);
+        createBarrierRange(-1, -1, -1, 22, Color.WHITE, true);
+        createBarrierRange(-1, -1, 28, -1, Color.YELLOW, true);
+        createBarrierRange(-1, 22, 28, 22, Color.YELLOW, true);
+        createBarrierRange(28, 0, 28, 22, Color.yellow, true);
         bullets = new ArrayList<>();
+    }
+
+    public void createBarrierRange(int startX, int startY, int endX, int endY, Color color, boolean breakable) {
+        for (int x = startX; x <= endX; x++) {
+            for (int y = startY; y <= endY; y++) {
+                barriers.add(new Barrier(x, y, color, this, breakable));
+            }
+
+        }
     }
 
     @Override
@@ -135,6 +142,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         }
         if (bullets != null) {
             for (Bullet bullet : bullets) {
+                graphics.setColor(Color.BLACK);
                 bullet.draw(graphics);
             }
         }
