@@ -37,16 +37,16 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public Field() {
         x = 30;
         y = 40;
-        grid = new Grid(28, 22, 25, 25, new Point(20, 10), new Color(0, 102, 0));
+        grid = new Grid(28, 22, 25, 25, new Point(10, 10), new Color(0, 102, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(new Color(0, 153, 153));
-        john = new FarmerJohn(image, 140, 270, grid, this);
+        john = new FarmerJohn(image, 140, 280, grid, this);
 
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
         createBarrierRange(0, 12, 27, 21, Color.GREEN, true);
-        createBarrierRange(-1, -1, -1, 22, Color.WHITE, true);
+        createBarrierRange(-1, -1, -1, 22, Color.TRANSLUCENT, true);
         createBarrierRange(-1, -1, 28, -1, Color.YELLOW, true);
         createBarrierRange(-1, 22, 28, 22, Color.YELLOW, true);
         createBarrierRange(28, 0, 28, 22, Color.yellow, true);
@@ -90,7 +90,10 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             moveFarmer(5, Direction.RIGHT);
         }
     }
-
+    public void stopbullet (int speed, Direction direction) {
+        
+    }
+            
     private void moveFarmer(int speed, Direction direction) {
         if (checkBarriers(grid.getCellLocationFromSystemCoordinate(john.getCalculatedLocation(speed, direction)))) {
             System.out.println("HIT BARRIER");
@@ -140,12 +143,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (grid != null) {
             grid.paintComponent(graphics);
         }
-        if (bullets != null) {
-            for (Bullet bullet : bullets) {
-                graphics.setColor(Color.BLACK);
-                bullet.draw(graphics);
-            }
-        }
+
 
         if (barriers != null) {
             for (int i = 0; i < barriers.size(); i++) {
@@ -156,7 +154,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (john != null) {
             john.draw(graphics);
         }
-
+        if (bullets != null) {
+            for (Bullet bullet : bullets) {
+                graphics.setColor(Color.BLACK);
+                bullet.draw(graphics);
+            }
+        }
     }
 
 //<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">
