@@ -5,6 +5,7 @@
  */
 package spaceinvaders;
 
+import audio.AudioPlayer;
 import environment.Direction;
 import environment.Environment;
 import environment.Velocity;
@@ -16,6 +17,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import static java.lang.Math.random;
 import java.util.ArrayList;
 import path.TrigonometryCalculator;
 
@@ -33,6 +35,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     int y;
     private ArrayList<Barrier> barriers;
     private ArrayList<Bullet> bullets;
+    private ArrayList<Item> items;
 
     public Field() {
         x = 30;
@@ -46,11 +49,14 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 //        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
         createBarrierRange(0, 12, 27, 21, Color.GREEN, true);
-        createBarrierRange(-1, -1, -1, 22, Color.TRANSLUCENT, true);
+        createBarrierRange(-1, -1, -1, 22, Color.WHITE, true);
         createBarrierRange(-1, -1, 28, -1, Color.YELLOW, true);
         createBarrierRange(-1, 22, 28, 22, Color.YELLOW, true);
         createBarrierRange(28, 0, 28, 22, Color.yellow, true);
         bullets = new ArrayList<>();
+        
+        items = new ArrayList<>();
+        items.add(new Item (140, 280, "POWER_UP", ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png"), this));
     }
 
     public void createBarrierRange(int startX, int startY, int endX, int endY, Color color, boolean breakable) {
@@ -64,7 +70,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
     @Override
     public void initializeEnvironment() {
-
+//        AudioPlayer.play("/spaceinvaders/RoosterCrowin.wav");
     }
     int counter;
 
@@ -75,7 +81,14 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 bullet.move();
             }
         }
-//        System.out.println("Hey dude.." + ++counter);
+        
+        Math.random();
+        if(random()< .001)
+            AudioPlayer.play("/spaceinvaders/Bleat.wav");
+        
+        Math.random();
+        if(random()< .001)
+            AudioPlayer.play("/spaceinvaders/Moo.wav");
     }
 
     @Override
@@ -135,7 +148,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         System.out.println("Mouse clicked at " + e.getPoint());
 
         bullets.add(new Bullet(john.getX() + 11, john.getY() + 22, TrigonometryCalculator.calculateVelocity(john.getLocation(), e.getPoint(), 15)));
-
+        AudioPlayer.play("/spaceinvaders/Gun_sound.wav");
     }
 
     @Override
@@ -158,6 +171,11 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             for (Bullet bullet : bullets) {
                 graphics.setColor(Color.BLACK);
                 bullet.draw(graphics);
+            }
+        }
+        if (items != null){
+            for (int i = 0; i < items.size(); i++) {
+                items.get(i).draw(graphics);
             }
         }
     }
