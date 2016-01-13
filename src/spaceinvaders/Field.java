@@ -31,6 +31,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     Bullet bullet;
     FarmerJohn john;
     Image image;
+    Image background;
     int x;
     int y;
     private ArrayList<Barrier> barriers;
@@ -43,10 +44,10 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         grid = new Grid(28, 22, 25, 25, new Point(10, 10), new Color(0, 102, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
-        this.setBackground(new Color(0, 153, 153));
+        this.setBackground(background = ResourceTools.loadImageFromResource("spaceinvaders/Old-barn-in-field.jpg"));
+
         john = new FarmerJohn(image, 140, 280, grid, this);
 
-//        myBarrier = new Barrier(10, 15, Color.green, this, true);
         barriers = new ArrayList<>();
         createBarrierRange(0, 12, 27, 21, Color.GREEN, true);
         createBarrierRange(-1, -1, -1, 22, Color.WHITE, true);
