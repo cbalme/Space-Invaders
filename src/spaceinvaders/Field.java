@@ -41,19 +41,19 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public Field() {
         x = 30;
         y = 40;
-        grid = new Grid(28, 22, 25, 25, new Point(10, 10), new Color(0, 102, 0));
+        grid = new Grid(35, 22, 25, 25, new Point(5, 5), new Color(0, 102, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(background = ResourceTools.loadImageFromResource("spaceinvaders/Old-barn-in-field.jpg"));
-
+        
         john = new FarmerJohn(image, 140, 280, grid, this);
-
+        tie = new TieFighter (image , 180, 200, grid, this);
         barriers = new ArrayList<>();
-        createBarrierRange(0, 12, 27, 21, Color.GREEN, true);
-        createBarrierRange(-1, -1, -1, 22, Color.WHITE, true);
-        createBarrierRange(-1, -1, 28, -1, Color.YELLOW, true);
-        createBarrierRange(-1, 22, 28, 22, Color.YELLOW, true);
-        createBarrierRange(28, 0, 28, 22, Color.yellow, true);
+        createBarrierRange(0, 12, 34, 21, new Color (154,205,50), true);
+        createBarrierRange(-1, -1, -1, 22, new Color (0, 0, 128, 255), true);
+        createBarrierRange(-1, -1, 35, -1, new Color (0, 0, 128, 255), true);
+        createBarrierRange(-1, 22, 35, 22, new Color (0, 0, 128, 255), true);
+        createBarrierRange(35, 0, 35, 22, new Color (0, 0, 128, 255), true);
         bullets = new ArrayList<>();
         
         items = new ArrayList<>();
@@ -104,10 +104,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             moveFarmer(5, Direction.RIGHT);
         }
     }
-    public void stopbullet (int speed, Direction direction) {
-        
-    }
-            
+          
     private void moveFarmer(int speed, Direction direction) {
         if (checkBarriers(grid.getCellLocationFromSystemCoordinate(john.getCalculatedLocation(speed, direction)))) {
             System.out.println("HIT BARRIER");
