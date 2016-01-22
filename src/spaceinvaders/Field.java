@@ -12,6 +12,7 @@ import environment.Velocity;
 import grid.Grid;
 import images.ResourceTools;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
@@ -32,11 +33,13 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     FarmerJohn john;
     Image image;
     Image background;
+    Image tie;
     int x;
     int y;
     private ArrayList<Barrier> barriers;
     private ArrayList<Bullet> bullets;
     private ArrayList<Item> items;
+    private int score;
 
     public Field() {
         x = 30;
@@ -45,11 +48,11 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(background = ResourceTools.loadImageFromResource("spaceinvaders/Old-barn-in-field.jpg"));
-        
-        john = new FarmerJohn(image, 140, 280, grid, this);
-        tie = new TieFighter (image , 180, 200, grid, this);
+        tie = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_1.png");
+        john = new FarmerJohn(image, 100, 300, grid, this);
+//        tie = new TieFighter (tie , 180, 200, grid, this);
         barriers = new ArrayList<>();
-        createBarrierRange(0, 12, 34, 21, new Color (154,205,50), true);
+        createBarrierRange(0, 13, 34, 21, new Color (154,205,50), true);
         createBarrierRange(-1, -1, -1, 22, new Color (0, 0, 128, 255), true);
         createBarrierRange(-1, -1, 35, -1, new Color (0, 0, 128, 255), true);
         createBarrierRange(-1, 22, 35, 22, new Color (0, 0, 128, 255), true);
@@ -57,7 +60,8 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         bullets = new ArrayList<>();
         
         items = new ArrayList<>();
-        items.add(new Item (140, 280, "POWER_UP", ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png"), this));
+//        items.add(new Item (140, 280, Item.ITEM_TYPE_SUPERCHARGED_GUN, ResourceTools.loadImageFromResource("spaceinvaders/cow1.png"), this));
+        items.add(new Item (100, 100, Item.ITEM_TYPE_ENEMY, ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_1.png"), this));
     }
 
     public void createBarrierRange(int startX, int startY, int endX, int endY, Color color, boolean breakable) {
@@ -147,6 +151,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
         bullets.add(new Bullet(john.getX() + 11, john.getY() + 22, TrigonometryCalculator.calculateVelocity(john.getLocation(), e.getPoint(), 15)));
         AudioPlayer.play("/spaceinvaders/Gun_sound.wav");
+        
     }
 
     @Override
@@ -171,11 +176,17 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 bullet.draw(graphics);
             }
         }
+        if (tie != null) {
+            
+        }
         if (items != null){
             for (int i = 0; i < items.size(); i++) {
                 items.get(i).draw(graphics);
             }
         }
+        graphics.setFont(new Font ("Calibri", Font.BOLD,24));
+        graphics.setColor(Color.RED);
+        graphics.drawString("SCORE: " + score, 7, 25);
     }
 
 //<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">
@@ -204,7 +215,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     @Override
     public Point validateMove(Point proposedLocation) {
         if (proposedLocation.x < 0) {
+            proposedLocation.x = grid.getColumns() - 1;
             System.out.println("OUT OF BOUNDS!!");
+        } else if (proposedLocation.x > grid.getColumns() - 1){
+            proposedLocation.x = 0;
+        } if (proposedLocation.y < 0){
+            proposedLocation.y = grid.getRows() - 1;
         }
 
         return proposedLocation;

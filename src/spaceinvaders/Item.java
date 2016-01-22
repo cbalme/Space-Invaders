@@ -16,10 +16,11 @@ public class Item {
 
     public void draw(Graphics graphics) {
         graphics.drawImage(getImage(),
-                getCellData().getSystemCoordX(getX(), getY()),
-                getCellData().getSystemCoordY(getX(), getY()),
-                getCellData().getCellWidth(),
-                getCellData().getCellHeight(), null);
+                x, y, 300, 300, null);
+//               getCellData().getSystemCoordX(getX(), getY()),
+//                getCellData().getSystemCoordY(getX(), getY()),
+//                getCellData().getCellWidth(),
+//                getCellData().getCellHeight(), null);
 
     }
 
@@ -29,9 +30,17 @@ public class Item {
         this.type = type;
         this.image = image;
         this.cellData = cellData;
+        
+        
     }
 
 //<editor-fold defaultstate="collapsed" desc="Properties">
+   public static final String ITEM_TYPE_POISON_BOTTLE = "POISON";
+   public static final String ITEM_TYPE_SUPERCHARGED_GUN = "SUPERGUN";
+   public static final String ITEM_TYPE_RESTORE_HEALTH = "HEALTH";
+   public static final String ITEM_TYPE_EXPLOSIVE_GUN = "BOOMGUN";
+   public static final String ITEM_TYPE_ENEMY = "ENEMY";
+    
     private int x, y;
     private String type;
     private Image image;
