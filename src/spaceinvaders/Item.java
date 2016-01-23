@@ -5,6 +5,7 @@
  */
 package spaceinvaders;
 
+import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -15,22 +16,26 @@ import java.awt.Image;
 public class Item {
 
     public void draw(Graphics graphics) {
-        graphics.drawImage(getImage(),
-                x, y, 300, 300, null);
-//               getCellData().getSystemCoordX(getX(), getY()),
-//                getCellData().getSystemCoordY(getX(), getY()),
-//                getCellData().getCellWidth(),
-//                getCellData().getCellHeight(), null);
-
+        graphics.drawImage(getImage(), x, y, width, height, null);
     }
 
-    public Item(int x, int y, String type, Image image, CellDataProviderIntf cellData) {
+    public Item(int x, int y, String type, CellDataProviderIntf cellData) {
         this.x = x;
         this.y = y;
         this.type = type;
         this.image = image;
         this.cellData = cellData;
         
+        if (type.equals(ITEM_TYPE_COW)) {
+            image = ResourceTools.loadImageFromResource("spaceinvaders/cow_left.png");
+            width = 100;
+            height = 100;
+                  
+        } else if (type.equals(ITEM_TYPE_ENEMY)) {
+            image = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_right.png");
+            width = 200;
+            height = 200;
+        }
         
     }
 
@@ -40,8 +45,9 @@ public class Item {
    public static final String ITEM_TYPE_RESTORE_HEALTH = "HEALTH";
    public static final String ITEM_TYPE_EXPLOSIVE_GUN = "BOOMGUN";
    public static final String ITEM_TYPE_ENEMY = "ENEMY";
+   public static final String ITEM_TYPE_COW = "COW";
     
-    private int x, y;
+    private int x, y, width, height;
     private String type;
     private Image image;
     private CellDataProviderIntf cellData;
