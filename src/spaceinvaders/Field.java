@@ -57,9 +57,9 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         bullets = new ArrayList<>();
 
         items = new ArrayList<>();
-        items.add(new Item(140, 280, Item.ITEM_TYPE_COW, this));
-        items.add(new Item(280, 280, Item.ITEM_TYPE_COW, this));
-        items.add(new Item(200, 280, Item.ITEM_TYPE_ENEMY, this));
+        items.add(new Item(140, 310, Item.ITEM_TYPE_COW, this));
+        items.add(new Item(280, 310, Item.ITEM_TYPE_COW, this));
+        items.add(new Item(100, 50, Item.ITEM_TYPE_ENEMY, this));
 //        items.add(new Item (140, 280, Item.ITEM_TYPE_COW, ResourceTools.loadImageFromResource("spaceinvaders/cow_1.png"), this));
 //        items.add(new Item (100, 100, Item.ITEM_TYPE_ENEMY, ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_2.png"), this));
     }
@@ -87,6 +87,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             }
         }
 
+        if (items != null) {
+            for (Item item : items) {
+                item.move();
+            }
+        }
+
         Math.random();
         if (random() < .001) {
             AudioPlayer.play("/spaceinvaders/Bleat.wav");
@@ -96,20 +102,32 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (random() < .001) {
             AudioPlayer.play("/spaceinvaders/Moo.wav");
         }
-    }
-
-    @Override
-    public void keyPressedHandler(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_A) {
-            moveFarmer(5, Direction.LEFT);
-        } else if (e.getKeyCode() == KeyEvent.VK_W) {
-            moveFarmer(5, Direction.UP);
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            moveFarmer(5, Direction.DOWN);
-        } else if (e.getKeyCode() == KeyEvent.VK_D) {
-            moveFarmer(5, Direction.RIGHT);
+        Math.random();
+        if (random() < .001) {
+            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
         }
+//        Math.random();
+//        if (random() < .001) {
+//            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
+//      }
     }
+        @Override
+        public void keyPressedHandler
+        (KeyEvent e
+        
+            ) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+                moveFarmer(5, Direction.LEFT);
+            } else if (e.getKeyCode() == KeyEvent.VK_W) {
+                moveFarmer(5, Direction.UP);
+            } else if (e.getKeyCode() == KeyEvent.VK_S) {
+                moveFarmer(5, Direction.DOWN);
+            } else if (e.getKeyCode() == KeyEvent.VK_D) {
+                moveFarmer(5, Direction.RIGHT);
+            }
+        }
+
+    
 
     private void moveFarmer(int speed, Direction direction) {
         if (checkBarriers(grid.getCellLocationFromSystemCoordinate(john.getCalculatedLocation(speed, direction)))) {
