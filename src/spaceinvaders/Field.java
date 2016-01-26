@@ -69,7 +69,6 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             for (int y = startY; y <= endY; y++) {
                 barriers.add(new Barrier(x, y, color, this, breakable));
             }
-
         }
     }
 
@@ -88,46 +87,40 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         }
 
         if (items != null) {
-            for (Item item : items) {
+            for (Item item : getItems()) {
                 item.move();
             }
         }
 
-        Math.random();
-        if (random() < .001) {
+        if (Math.random() < .001) {
             AudioPlayer.play("/spaceinvaders/Bleat.wav");
         }
 
-        Math.random();
-        if (random() < .001) {
+        if (Math.random() < .001) {
             AudioPlayer.play("/spaceinvaders/Moo.wav");
         }
-        Math.random();
-        if (random() < .001) {
-            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
-        }
+//        Math.random();
+//        if (random() < .001) {
+//            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
+//        }
 //        Math.random();
 //        if (random() < .001) {
 //            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
 //      }
     }
-        @Override
-        public void keyPressedHandler
-        (KeyEvent e
-        
-            ) {
-        if (e.getKeyCode() == KeyEvent.VK_A) {
-                moveFarmer(5, Direction.LEFT);
-            } else if (e.getKeyCode() == KeyEvent.VK_W) {
-                moveFarmer(5, Direction.UP);
-            } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                moveFarmer(5, Direction.DOWN);
-            } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                moveFarmer(5, Direction.RIGHT);
-            }
-        }
 
-    
+    @Override
+    public void keyPressedHandler(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            moveFarmer(5, Direction.LEFT);
+        } else if (e.getKeyCode() == KeyEvent.VK_W) {
+            moveFarmer(5, Direction.UP);
+        } else if (e.getKeyCode() == KeyEvent.VK_S) {
+            moveFarmer(5, Direction.DOWN);
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+            moveFarmer(5, Direction.RIGHT);
+        }
+    }
 
     private void moveFarmer(int speed, Direction direction) {
         if (checkBarriers(grid.getCellLocationFromSystemCoordinate(john.getCalculatedLocation(speed, direction)))) {
@@ -157,7 +150,6 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 System.out.println("HIT BARRIER");
             }
         }
-
     }
 
     @Override
@@ -171,7 +163,6 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
         bullets.add(new Bullet(john.getX() + 11, john.getY() + 22, TrigonometryCalculator.calculateVelocity(john.getLocation(), e.getPoint(), 15)));
         AudioPlayer.play("/spaceinvaders/Gun_sound.wav");
-
     }
 
     @Override
@@ -196,8 +187,8 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             }
         }
         if (items != null) {
-            for (int i = 0; i < items.size(); i++) {
-                items.get(i).draw(graphics);
+            for (Item item : getItems()) {
+                item.draw(graphics);
             }
         }
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
@@ -243,4 +234,11 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         return proposedLocation;
     }
 //</editor-fold>
+
+    /**
+     * @return the items
+     */
+    public ArrayList<Item> getItems() {
+        return (ArrayList<Item>) items.clone();
+    }
 }

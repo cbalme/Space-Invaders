@@ -21,7 +21,7 @@ public class Item {
     }
 
     {
-        setDirection(Direction.RIGHT);
+        setDirection(Direction.LEFT);
     }
 
     public Item(int x, int y, String type, CellDataProviderIntf cellData) {
@@ -46,8 +46,11 @@ public class Item {
             height = 250;
             speed = (int) (Math.random() * 6);
         }
-
     }
+    
+    private int getRandom(int min, int max){
+        speed = (max - min + 1) * (Math.random()) + (min)
+        }
 
     public void move(){
         if (direction == Direction.LEFT) {
@@ -55,7 +58,7 @@ public class Item {
             AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
         }else {
             x += speed;
-//            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
+            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
         }
         if (direction == Direction.UP) {
             y -= speed;
