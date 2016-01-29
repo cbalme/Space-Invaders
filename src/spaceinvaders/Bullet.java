@@ -24,7 +24,6 @@ public class Bullet {
     public void move() {
         x += velocity.x;
         y += velocity.y;
-
     }
 
     public void draw(Graphics graphics) {

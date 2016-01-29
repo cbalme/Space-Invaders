@@ -92,12 +92,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             }
         }
 
-        if (Math.random() < .001) {
-            AudioPlayer.play("/spaceinvaders/Bleat.wav");
+        if (Math.random() < .01) {
+            Item.playSound(Item.ITEM_TYPE_ENEMY);
         }
 
-        if (Math.random() < .001) {
-            AudioPlayer.play("/spaceinvaders/Moo.wav");
+        if (Math.random() < .01) {
+            Item.playSound(Item.ITEM_TYPE_COW);
         }
 //        Math.random();
 //        if (random() < .001) {
