@@ -9,6 +9,7 @@ import audio.AudioPlayer;
 import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 
 /**
  *
@@ -21,9 +22,9 @@ public class Item {
     }
 
     {
-        setDirection(Direction.RIGHT);
-        minY = -10;
-        maxY = 350;
+        setDirection(Direction.LEFT);
+        minY = -150;
+        maxY = 550;
 
         minX = -100;
         maxX = 1000;
@@ -41,7 +42,7 @@ public class Item {
             image_right = ResourceTools.loadImageFromResource("spaceinvaders/cow_right.png");
             width = 75;
             height = 75;
-            speed = (int) getRandom(0, 4);
+            speed = (int) getRandom(0, 2);
             
             minX = 10;
             maxX = 800;
@@ -49,12 +50,11 @@ public class Item {
         } else if (type.equals(ITEM_TYPE_ENEMY)) {
             image_right = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_right.png");
             image_left = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_left.png");
-            width = 250;
-            height = 250;
-            speed = getRandom(3, 5);
-            
-            minX = -100;
-            maxX = 1000;
+            width = 100;
+            height = 100;
+            speed = getRandom(2, 5);
+            minX = -150;
+            maxX = 1200;
         }
     }
 
@@ -67,7 +67,6 @@ public class Item {
             x -= speed;
         } else {
             x += speed;
-//            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
         }
 
         
@@ -125,6 +124,11 @@ public class Item {
 
     private int speed;
 
+    
+    public Point getLocation(){
+        return new Point(x, y);
+    }
+    
     /**
      * @return the x
      */

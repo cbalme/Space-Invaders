@@ -43,7 +43,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public Field() {
         x = 30;
         y = 40;
-        grid = new Grid(35, 22, 25, 25, new Point(5, 5), new Color(0, 102, 0));
+        grid = new Grid(35, 22, 25, 25, new Point(5, 5), new Color(0, 102, 0, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(background = ResourceTools.loadImageFromResource("spaceinvaders/Old-barn-in-field.jpg"));
@@ -59,7 +59,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         items = new ArrayList<>();
         items.add(new Item(140, 310, Item.ITEM_TYPE_COW, this));
         items.add(new Item(280, 310, Item.ITEM_TYPE_COW, this));
-        items.add(new Item(100, 50, Item.ITEM_TYPE_ENEMY, this));
+        items.add(new Item(100, 200, Item.ITEM_TYPE_ENEMY, this));
 //        items.add(new Item (140, 280, Item.ITEM_TYPE_COW, ResourceTools.loadImageFromResource("spaceinvaders/cow_1.png"), this));
 //        items.add(new Item (100, 100, Item.ITEM_TYPE_ENEMY, ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_2.png"), this));
     }
@@ -99,6 +99,14 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (Math.random() < .01) {
             Item.playSound(Item.ITEM_TYPE_COW);
         }
+
+        if ((bullets != null) && (Math.random() < .01)) {
+            bullets.add(new Bullet(getTieFighterLocation().x + 45, getTieFighterLocation().y + 65, new Velocity(0, 20)));
+            AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
+        }
+        if ((bullets != null) && (Math.random() < .01)) {
+            bullets.add(new Bullet(getTieFighterLocation().x + 60, getTieFighterLocation().y + 65, new Velocity(0, 20)));
+        }
 //        Math.random();
 //        if (random() < .001) {
 //            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
@@ -107,16 +115,25 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 //        if (random() < .001) {
 //            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
 //      }
+        }
+
+    
+
+    private Point getTieFighterLocation() {
+        if (items != null) {
+            for (Item item : items) {
+                if (item.getType().equals(Item.ITEM_TYPE_ENEMY)) {
+                    return item.getLocation();
+                }
+            }
+        }
+        return new Point();
     }
 
     @Override
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
             moveFarmer(5, Direction.LEFT);
-        } else if (e.getKeyCode() == KeyEvent.VK_W) {
-            moveFarmer(5, Direction.UP);
-        } else if (e.getKeyCode() == KeyEvent.VK_S) {
-            moveFarmer(5, Direction.DOWN);
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             moveFarmer(5, Direction.RIGHT);
         }
@@ -186,9 +203,16 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 bullet.draw(graphics);
             }
         }
+
         if (items != null) {
             for (Item item : getItems()) {
                 item.draw(graphics);
+            }
+        }
+        if (bullets != null) {
+            for (Bullet bullet : bullets) {
+                graphics.setColor(Color.GREEN);
+                bullet.draw(graphics);
             }
         }
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
