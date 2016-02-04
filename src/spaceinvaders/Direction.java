@@ -10,5 +10,5 @@ package spaceinvaders;
  * @author Oliver
  */
 public enum Direction {
-    LEFT, RIGHT, UP, DOWN
+    LEFT, RIGHT, UP, DOWN, RANDOM
 }

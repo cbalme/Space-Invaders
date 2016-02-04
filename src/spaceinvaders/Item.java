@@ -22,14 +22,14 @@ public class Item {
     }
 
     {
-        setDirection(Direction.LEFT);
-        minY = -150;
-        maxY = 550;
+        setDirection(Direction.RIGHT);
+        minY = -100;
+        maxY = 400;
 
         minX = -100;
-        maxX = 1000;
-    }
+        maxX = 1000; 
 
+    }
     public Item(int x, int y, String type, CellDataProviderIntf cellData) {
         this.x = x;
         this.y = y;
@@ -43,7 +43,7 @@ public class Item {
             width = 75;
             height = 75;
             speed = (int) getRandom(0, 2);
-            
+
             minX = 10;
             maxX = 800;
 
@@ -52,12 +52,21 @@ public class Item {
             image_left = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_left.png");
             width = 100;
             height = 100;
-            speed = getRandom(2, 5);
-            minX = -150;
+            speed = getRandom(2, 6);
+            minX = -250;
             maxX = 1200;
-        }
-    }
+        } else if (type.equals(ITEM_TYPE_SHEEP)) {
+            image_left = ResourceTools.loadImageFromResource("spaceinvaders/sheepleft.png");
+            image_right = ResourceTools.loadImageFromResource("spaceinvaders/sheepright.png");
+            width = 45;
+            height = 45;
+            speed = (int) getRandom(0, 2);
 
+            minX = 10;
+            maxX = 950;
+
+    }
+    }
     private int getRandom(int min, int max) {
         return (int) (min + (max - min + 1) * (Math.random()));
     }
@@ -69,7 +78,6 @@ public class Item {
             x += speed;
         }
 
-        
         if (type.equals(Item.ITEM_TYPE_COW)) {
             if (x > maxX) {
                 direction = Direction.LEFT;
@@ -77,7 +85,13 @@ public class Item {
                 direction = Direction.RIGHT;
             }
         }
-        
+        if (type.equals(Item.ITEM_TYPE_SHEEP)) {
+            if (x > maxX) {
+                direction = Direction.LEFT;
+            } else if (x < minX) {
+                direction = Direction.RIGHT;
+            }
+        }
         if (type.equals(Item.ITEM_TYPE_ENEMY)) {
             if (x > maxX) {
                 x = minX;
@@ -102,12 +116,12 @@ public class Item {
     public static void playSound(String type) {
         if (type.equals(Item.ITEM_TYPE_COW)) {
             AudioPlayer.play("/spaceinvaders/Moo.wav");
-
         } else if (type.equals(Item.ITEM_TYPE_ENEMY)) {
-            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
+            AudioPlayer.play("/spaceinvaders/TIE-Fly1.wav");
+        } else if (type.equals(Item.ITEM_TYPE_SHEEP)) {
+            AudioPlayer.play("/spaceinvaders/Bleat.wav");
         }
     }
-
 //<editor-fold defaultstate="collapsed" desc="Properties">
     public static final String ITEM_TYPE_POISON_BOTTLE = "POISON";
     public static final String ITEM_TYPE_SUPERCHARGED_GUN = "SUPERGUN";
@@ -115,7 +129,8 @@ public class Item {
     public static final String ITEM_TYPE_EXPLOSIVE_GUN = "BOOMGUN";
     public static final String ITEM_TYPE_ENEMY = "ENEMY";
     public static final String ITEM_TYPE_COW = "COW";
-
+    public static final String ITEM_TYPE_SHEEP = "SHEEP";
+    
     private int x, y, width, height, minY, maxY, minX, maxX;
     private String type;
     private Image image_left, image_right;
@@ -124,11 +139,10 @@ public class Item {
 
     private int speed;
 
-    
-    public Point getLocation(){
+    public Point getLocation() {
         return new Point(x, y);
     }
-    
+
     /**
      * @return the x
      */
@@ -205,13 +219,14 @@ public class Item {
     }
 //</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Direction">
     /**
      * @return the direction
      */
     public Direction getDirection() {
         return direction;
     }
-
+    
     /**
      * @param direction the direction to set
      */
@@ -219,3 +234,4 @@ public class Item {
         this.direction = direction;
     }
 }
+//</editor-fold>

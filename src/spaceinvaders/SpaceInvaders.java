@@ -5,6 +5,7 @@
  */
 package spaceinvaders;
 
+import audio.AudioPlayer;
 import environment.ApplicationStarter;
 
 /**
@@ -19,6 +20,7 @@ public class SpaceInvaders {
     public static void main(String[] args) {
         // TODO code application logic here
         ApplicationStarter.run("The Field", new Field());
+        AudioPlayer.play("/spaceinvaders/RoosterCrowin.wav");
     }
 
 }

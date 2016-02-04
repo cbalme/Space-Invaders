@@ -43,23 +43,26 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public Field() {
         x = 30;
         y = 40;
-        grid = new Grid(35, 22, 25, 25, new Point(5, 5), new Color(0, 102, 0, 0));
+        grid = new Grid(39, 22, 25, 25, new Point(5, 5), new Color(0, 102, 0, 0));
 //        image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png").getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
         this.setBackground(background = ResourceTools.loadImageFromResource("spaceinvaders/Old-barn-in-field.jpg"));
         john = new FarmerJohn(image, 100, 300, grid, this);
         barriers = new ArrayList<>();
-        createBarrierRange(0, 13, 34, 21, new Color(154, 205, 50), true);
+        createBarrierRange(0, 13, 38, 21, new Color(154, 205, 50), true);
         createBarrierRange(-1, -1, -1, 22, new Color(0, 0, 128, 255), true);
-        createBarrierRange(-1, -1, 35, -1, new Color(0, 0, 128, 255), true);
-        createBarrierRange(-1, 22, 35, 22, new Color(0, 0, 128, 255), true);
-        createBarrierRange(35, 0, 35, 22, new Color(0, 0, 128, 255), true);
+        createBarrierRange(-1, -1, 39, -1, new Color(0, 0, 128, 255), true);
+        createBarrierRange(-1, 22, 39, 22, new Color(0, 0, 128, 255), true);
+        createBarrierRange(39, 0, 39, 22, new Color(0, 0, 128, 255), true);
         bullets = new ArrayList<>();
 
         items = new ArrayList<>();
         items.add(new Item(140, 310, Item.ITEM_TYPE_COW, this));
         items.add(new Item(280, 310, Item.ITEM_TYPE_COW, this));
-        items.add(new Item(100, 200, Item.ITEM_TYPE_ENEMY, this));
+        items.add(new Item(450, 310, Item.ITEM_TYPE_SHEEP, this));
+        items.add(new Item(500, 310, Item.ITEM_TYPE_SHEEP, this));
+        items.add(new Item(-260, 100, Item.ITEM_TYPE_ENEMY, this));
+        items.add(new Item(100, 1000, Item.ITEM_TYPE_ENEMY, this));
 //        items.add(new Item (140, 280, Item.ITEM_TYPE_COW, ResourceTools.loadImageFromResource("spaceinvaders/cow_1.png"), this));
 //        items.add(new Item (100, 100, Item.ITEM_TYPE_ENEMY, ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_2.png"), this));
     }
@@ -95,17 +98,22 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (Math.random() < .01) {
             Item.playSound(Item.ITEM_TYPE_ENEMY);
         }
-
+        if (Math.random() < .01) {
+            Item.playSound(Item.ITEM_TYPE_SHEEP);
+        }
         if (Math.random() < .01) {
             Item.playSound(Item.ITEM_TYPE_COW);
         }
-
+        if (Math.random() < .001) {
+            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
+        }
         if ((bullets != null) && (Math.random() < .01)) {
-            bullets.add(new Bullet(getTieFighterLocation().x + 45, getTieFighterLocation().y + 65, new Velocity(0, 20)));
+            bullets.add(new Bullet(getTieFighterLocation().x + 34, getTieFighterLocation().y + 61, new Velocity(0, 20)));
             AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
         }
         if ((bullets != null) && (Math.random() < .01)) {
-            bullets.add(new Bullet(getTieFighterLocation().x + 60, getTieFighterLocation().y + 65, new Velocity(0, 20)));
+            bullets.add(new Bullet(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, new Velocity(0, 20)));
+            AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
         }
 //        Math.random();
 //        if (random() < .001) {
@@ -115,9 +123,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 //        if (random() < .001) {
 //            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
 //      }
-        }
-
-    
+    }
 
     private Point getTieFighterLocation() {
         if (items != null) {
@@ -197,6 +203,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (john != null) {
             john.draw(graphics);
         }
+
+        if (items != null) {
+            for (Item item : getItems()) {
+                item.draw(graphics);
+            }
+        }
         if (bullets != null) {
             for (Bullet bullet : bullets) {
                 graphics.setColor(Color.BLACK);
@@ -204,9 +216,10 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             }
         }
 
-        if (items != null) {
-            for (Item item : getItems()) {
-                item.draw(graphics);
+        if (bullets != null) {
+            for (Bullet bullet : bullets) {
+                graphics.setColor(Color.GREEN);
+                bullet.draw(graphics);
             }
         }
         if (bullets != null) {
@@ -232,19 +245,22 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     }
 
     @Override
-    public int getSystemCoordX(int x, int y) {
+    public int getSystemCoordX(int x, int y
+    ) {
         return grid.getCellSystemCoordinate(x, y).x;
     }
 
     @Override
-    public int getSystemCoordY(int x, int y) {
+    public int getSystemCoordY(int x, int y
+    ) {
         return grid.getCellSystemCoordinate(x, y).y;
     }
 //</editor-fold>
 
 //<editor-fold defaultstate="collapsed" desc="MoveValidatorIntf">
     @Override
-    public Point validateMove(Point proposedLocation) {
+    public Point validateMove(Point proposedLocation
+    ) {
         if (proposedLocation.x < 0) {
             proposedLocation.x = grid.getColumns() - 1;
             System.out.println("OUT OF BOUNDS!!");
@@ -257,7 +273,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
         return proposedLocation;
     }
-//</editor-fold>
+    //</editor-fold>
 
     /**
      * @return the items
