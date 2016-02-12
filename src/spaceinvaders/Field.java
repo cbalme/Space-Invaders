@@ -6,6 +6,10 @@
 package spaceinvaders;
 
 import audio.AudioPlayer;
+import audio.Playlist;
+import audio.SoundManager;
+import audio.Source;
+import audio.Track;
 import environment.Direction;
 import environment.Environment;
 import environment.Velocity;
@@ -63,10 +67,20 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         items.add(new Item(500, 310, Item.ITEM_TYPE_SHEEP, this));
         items.add(new Item(-260, 100, Item.ITEM_TYPE_ENEMY, this));
         items.add(new Item(100, 1000, Item.ITEM_TYPE_ENEMY, this));
-//        items.add(new Item (140, 280, Item.ITEM_TYPE_COW, ResourceTools.loadImageFromResource("spaceinvaders/cow_1.png"), this));
-//        items.add(new Item (100, 100, Item.ITEM_TYPE_ENEMY, ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_2.png"), this));
+        
+        setUpSound();
     }
-
+    SoundManager soundManager;
+    public static final String SOUND_FLY7 = "FLY7";
+    private void setUpSound(){
+        //set up a list of tracks in a playlist
+        ArrayList<Track> tracks = new ArrayList<>();
+        tracks.add(new Track("SOUND_FLY7", Source.RESOURCE, "/spaceinvaders/TIE-Fly7.wav"));
+        
+        Playlist playlist = new Playlist(tracks);
+        //pas the playlist to a sound manager
+        soundManager = new SoundManager(playlist);
+    }
     public void createBarrierRange(int startX, int startY, int endX, int endY, Color color, boolean breakable) {
         for (int x = startX; x <= endX; x++) {
             for (int y = startY; y <= endY; y++) {
@@ -215,19 +229,19 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 bullet.draw(graphics);
             }
         }
-
-        if (bullets != null) {
-            for (Bullet bullet : bullets) {
-                graphics.setColor(Color.GREEN);
-                bullet.draw(graphics);
-            }
-        }
-        if (bullets != null) {
-            for (Bullet bullet : bullets) {
-                graphics.setColor(Color.GREEN);
-                bullet.draw(graphics);
-            }
-        }
+//
+//        if (bullets != null) {
+//            for (Bullet bullet : bullets) {
+//                graphics.setColor(Color.GREEN);
+//                bullet.draw(graphics);
+//            }
+//        }
+//        if (bullets != null) {
+//            for (Bullet bullet : bullets) {
+//                graphics.setColor(Color.GREEN);
+//                bullet.draw(graphics);
+//            }
+//        }
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
         graphics.setColor(Color.RED);
         graphics.drawString("SCORE: " + score, 7, 25);

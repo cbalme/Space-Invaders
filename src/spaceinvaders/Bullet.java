@@ -27,7 +27,7 @@ public class Bullet {
     }
 
     public void draw(Graphics graphics) {
-        graphics.fillRect(x, y, 4, 4);
+        graphics.fillRect(x, y, 4, 2);
     }
 
 //<editor-fold defaultstate="collapsed" desc="Properties">

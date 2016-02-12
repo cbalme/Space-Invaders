@@ -58,8 +58,8 @@ public class Item {
         } else if (type.equals(ITEM_TYPE_SHEEP)) {
             image_left = ResourceTools.loadImageFromResource("spaceinvaders/sheepleft.png");
             image_right = ResourceTools.loadImageFromResource("spaceinvaders/sheepright.png");
-            width = 45;
-            height = 45;
+            width = 35;
+            height = 35;
             speed = (int) getRandom(0, 2);
 
             minX = 10;
