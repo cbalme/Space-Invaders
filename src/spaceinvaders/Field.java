@@ -41,6 +41,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     int y;
     private ArrayList<Barrier> barriers;
     private ArrayList<Bullet> bullets;
+    private ArrayList<Bullet> lasers;
     private ArrayList<Item> items;
     private int score;
 
@@ -59,7 +60,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         createBarrierRange(-1, 22, 39, 22, new Color(0, 0, 128, 255), true);
         createBarrierRange(39, 0, 39, 22, new Color(0, 0, 128, 255), true);
         bullets = new ArrayList<>();
-
+        lasers = new ArrayList<>();
         items = new ArrayList<>();
         items.add(new Item(140, 310, Item.ITEM_TYPE_COW, this));
         items.add(new Item(280, 310, Item.ITEM_TYPE_COW, this));
@@ -112,7 +113,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (Math.random() < .01) {
             Item.playSound(Item.ITEM_TYPE_ENEMY);
         }
-        if (Math.random() < .01) {
+        if (Math.random() < .001) {
             Item.playSound(Item.ITEM_TYPE_SHEEP);
         }
         if (Math.random() < .01) {
@@ -121,12 +122,12 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         if (Math.random() < .001) {
             AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
         }
-        if ((bullets != null) && (Math.random() < .01)) {
-            bullets.add(new Bullet(getTieFighterLocation().x + 34, getTieFighterLocation().y + 61, new Velocity(0, 20)));
+        if ((lasers != null) && (Math.random() < .01)) {
+            lasers.add(new Bullet(getTieFighterLocation().x + 34, getTieFighterLocation().y + 61, new Velocity(0, 20)));
             AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
         }
-        if ((bullets != null) && (Math.random() < .01)) {
-            bullets.add(new Bullet(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, new Velocity(0, 20)));
+        if ((lasers != null) && (Math.random() < .01)) {
+            lasers.add(new Bullet(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, new Velocity(0, 20)));
             AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
         }
 //        Math.random();
@@ -229,13 +230,13 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 bullet.draw(graphics);
             }
         }
-//
-//        if (bullets != null) {
-//            for (Bullet bullet : bullets) {
-//                graphics.setColor(Color.GREEN);
-//                bullet.draw(graphics);
-//            }
-//        }
+
+        if (lasers != null) {
+            for (Bullet laser : lasers) {
+                graphics.setColor(Color.GREEN);
+                laser.draw(graphics);
+            }
+        }
 //        if (bullets != null) {
 //            for (Bullet bullet : bullets) {
 //                graphics.setColor(Color.GREEN);

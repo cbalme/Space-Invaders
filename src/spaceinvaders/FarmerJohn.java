@@ -7,6 +7,7 @@ package spaceinvaders;
 
 import environment.Direction;
 import grid.Grid;
+import images.Animator;
 import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -36,8 +37,9 @@ public class FarmerJohn {
         this.grid = grid;
         this.validator = validator;
         loadImages();
-
+        animator = new Animator(new AnimatedImageManager(), AnimatedImageManager.RUN_LEFT_IMAGE_NAMES, 100);
     }
+    private Animator animator;
 
     private void loadImages() {
         this.image = ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png");
@@ -72,13 +74,12 @@ public class FarmerJohn {
 //        setState(FarmerJohnState.Run_Down);
 //    }
     private Image getImage() {
-//        if (animator != null) {
-//            return animator.getCurrentImage();
-//        } else {
-//            System.out.println("Broken");
-//            return image;
-//        }
+        if (animator != null) {
+            return animator.getCurrentImage();
+        }else {
+
         return image;
+        }
     }
 
     public void move(int move) {
