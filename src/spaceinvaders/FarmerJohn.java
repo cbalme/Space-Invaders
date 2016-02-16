@@ -5,6 +5,7 @@
  */
 package spaceinvaders;
 
+import components.Health;
 import environment.Direction;
 import grid.Grid;
 import images.Animator;
@@ -12,6 +13,10 @@ import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import static spaceinvaders.AnimatedImageManager.RUN_LEFT_IMAGE_NAMES;
+import static spaceinvaders.AnimatedImageManager.RUN_RIGHT_IMAGE_NAMES;
+import static spaceinvaders.AnimatedImageManager.STAND_LEFT_IMAGE_NAMES;
+import static spaceinvaders.AnimatedImageManager.STAND_RIGHT_IMAGE_NAMES;
 
 /**
  *
@@ -38,6 +43,7 @@ public class FarmerJohn {
         this.validator = validator;
         loadImages();
         animator = new Animator(new AnimatedImageManager(), AnimatedImageManager.RUN_LEFT_IMAGE_NAMES, 100);
+        this.health = 100;
     }
     private Animator animator;
 
@@ -76,9 +82,9 @@ public class FarmerJohn {
     private Image getImage() {
         if (animator != null) {
             return animator.getCurrentImage();
-        }else {
+        } else {
 
-        return image;
+            return image;
         }
     }
 
@@ -106,6 +112,8 @@ public class FarmerJohn {
     private int speed;
     private int x;
     private int y;
+    private int health;
+    private AnimationState moveState;
 
     /**
      * @return the direction
@@ -192,4 +200,48 @@ public class FarmerJohn {
         return com;
     }
 //</editor-fold>
+
+    /**
+     * @return the health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * @param health the health to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    /**
+     * @return the moveState
+     */
+    public AnimationState getMoveState() {
+        return moveState;
+    }
+
+    /**
+     * @param moveState the moveState to set
+     */
+    public void setMoveState(AnimationState moveState) {
+        this.moveState = moveState;
+
+        switch (moveState) {
+            default:
+            case RUN_LEFT:
+                animator.setImageNames(RUN_LEFT_IMAGE_NAMES);
+                break;
+            case RUN_RIGHT:
+                animator.setImageNames(RUN_RIGHT_IMAGE_NAMES);
+                break;
+            case STAND_LEFT:
+                animator.setImageNames(STAND_LEFT_IMAGE_NAMES);
+                break;
+            case STAND_RIGHT:
+                animator.setImageNames(STAND_RIGHT_IMAGE_NAMES);
+                break;
+        }
+    }
 }

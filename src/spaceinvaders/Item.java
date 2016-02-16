@@ -42,7 +42,7 @@ public class Item {
             image_right = ResourceTools.loadImageFromResource("spaceinvaders/cow_right.png");
             width = 75;
             height = 75;
-            speed = (int) getRandom(0, 2);
+            speed = (int) getRandom(0, 1);
 
             minX = 10;
             maxX = 800;
@@ -60,7 +60,7 @@ public class Item {
             image_right = ResourceTools.loadImageFromResource("spaceinvaders/sheepright.png");
             width = 35;
             height = 35;
-            speed = (int) getRandom(0, 2);
+            speed = (int) getRandom(0, 1);
 
             minX = 10;
             maxX = 950;

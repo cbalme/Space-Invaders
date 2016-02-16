@@ -20,11 +20,17 @@ public class AnimatedImageManager extends ImageManager {
         RUN_LEFT_IMAGE_NAMES = new ArrayList<>();
         RUN_LEFT_IMAGE_NAMES.add(RUN_LEFT_01);
         RUN_LEFT_IMAGE_NAMES.add(RUN_LEFT_02);
-        
+
         RUN_RIGHT_IMAGE_NAMES = new ArrayList<>();
         RUN_RIGHT_IMAGE_NAMES.add(RUN_RIGHT_01);
         RUN_RIGHT_IMAGE_NAMES.add(RUN_RIGHT_02);
-        
+
+        STAND_LEFT_IMAGE_NAMES = new ArrayList<>();
+        STAND_LEFT_IMAGE_NAMES.add(RUN_LEFT_01);
+
+        STAND_RIGHT_IMAGE_NAMES = new ArrayList<>();
+        STAND_RIGHT_IMAGE_NAMES.add(RUN_RIGHT_01);
+
         this.addImage(RUN_LEFT_01, ResourceTools.loadImageFromResource("spaceinvaders/FarmerJohn.png"));
         this.addImage(RUN_LEFT_02, ResourceTools.loadImageFromResource("spaceinvaders/johnrun.png"));
         this.addImage(RUN_RIGHT_01, ResourceTools.loadImageFromResource("spaceinvaders/johnreverse.png"));
@@ -37,7 +43,11 @@ public class AnimatedImageManager extends ImageManager {
     public static final String RUN_RIGHT_01 = "RUN_RIGHT_01";
     public static final String RUN_RIGHT_02 = "RUN_RIGHT_02";
 
+    public static final String STAND_LEFT_01 = "RUN_LEFT_01";
+    public static final String STAND_RIGHT_01 = "RUN_RIGHT_01";
+
     public static ArrayList<String> RUN_LEFT_IMAGE_NAMES;
     public static ArrayList<String> RUN_RIGHT_IMAGE_NAMES;
-
+    public static ArrayList<String> STAND_LEFT_IMAGE_NAMES;
+    public static ArrayList<String> STAND_RIGHT_IMAGE_NAMES;
 }

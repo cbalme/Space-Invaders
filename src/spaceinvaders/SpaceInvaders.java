@@ -20,7 +20,7 @@ public class SpaceInvaders {
     public static void main(String[] args) {
         // TODO code application logic here
         ApplicationStarter.run("The Field", new Field());
-        AudioPlayer.play("/spaceinvaders/RoosterCrowin.wav");
+//        AudioPlayer.play("/spaceinvaders/RoosterCrowin.wav");
     }
 
 }
