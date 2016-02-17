@@ -83,23 +83,22 @@ public class FarmerJohn {
         if (animator != null) {
             return animator.getCurrentImage();
         } else {
-
             return image;
         }
     }
 
-    public void move(int move) {
+    public void move() {
         if (getDirection() == Direction.RIGHT) {
-            setX(getX() + move);
+            setX(getX() + speed);
         }
         if (getDirection() == Direction.LEFT) {
-            setX(getX() - move);
+            setX(getX() - speed);
         }
         if (getDirection() == Direction.UP) {
-            setY(getY() - move);
+            setY(getY() - speed);
         }
         if (getDirection() == Direction.DOWN) {
-            setY(getY() + move);
+            setY(getY() + speed);
         }
     }
 
@@ -127,6 +126,12 @@ public class FarmerJohn {
      */
     public void setDirection(Direction direction) {
         this.direction = direction;
+        
+        if (direction == Direction.LEFT) {
+            setMoveState(AnimationState.RUN_LEFT);
+        } else {
+            setMoveState(AnimationState.RUN_RIGHT);
+        }
     }
 
     /**
@@ -141,8 +146,22 @@ public class FarmerJohn {
      */
     public void setSpeed(int speed) {
         this.speed = speed;
+        
+        if (speed <= 0){
+            if (direction == Direction.LEFT) {
+                setMoveState(AnimationState.STAND_LEFT);
+            } else {
+                setMoveState(AnimationState.STAND_RIGHT);
+            }
+        } else {
+            if (direction == Direction.LEFT) {
+                setMoveState(AnimationState.RUN_LEFT);
+            } else {
+                setMoveState(AnimationState.RUN_RIGHT);
+            }
+        }
+            
     }
-
     /**
      * @return the x
      */

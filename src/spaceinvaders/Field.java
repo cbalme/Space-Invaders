@@ -44,6 +44,14 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     private ArrayList<Bullet> lasers;
     private ArrayList<Item> items;
     private int score;
+    
+    private ArrayList<Bullet> getCopyOfBullets(){
+        ArrayList<Bullet> temp = new ArrayList<>();
+        for (Bullet bullet: bullets){
+            temp.add(bullet);
+        }
+        return temp;
+    }
 
     public Field() {
         x = 30;
@@ -101,9 +109,18 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     @Override
     public void timerTaskHandler() {
         if (bullets != null) {
-            for (Bullet bullet : bullets) {
+            ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
+            for (Bullet bullet : getCopyOfBullets()) {
                 bullet.move();
+                
+                if ((bullet.getX() < 0) || 
+                    (bullet.getX() > this.getWidth()) || 
+                    (bullet.getY() < 0) || 
+                    (bullet.getY() > this.getHeight())){
+                    bulletsToRemove.add(bullet);
+                }
             }
+            bullets.removeAll(bulletsToRemove);
         }
 
         if (items != null) {
@@ -147,9 +164,20 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     }
 
     @Override
+    public void keyReleasedHandler(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_A) {
+            john.setSpeed(0);
+        } else if (e.getKeyCode() == KeyEvent.VK_D) {
+            john.setSpeed(0);
+        }
+    }
+
+    @Override
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
             moveFarmer(7, Direction.LEFT);
+            
+//            AnimatedImageManager.RUN_LEFT_IMAGE_NAMES;
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             moveFarmer(7, Direction.RIGHT);
         }
@@ -161,7 +189,8 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             java.awt.Toolkit.getDefaultToolkit().beep();
         } else {
             john.setDirection(direction);
-            john.move(speed);
+            john.setSpeed(speed);
+            john.move();
         }
     }
 
@@ -183,11 +212,6 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                 System.out.println("HIT BARRIER");
             }
         }
-    }
-
-    @Override
-    public void keyReleasedHandler(KeyEvent e) {
-
     }
 
     @Override
@@ -220,16 +244,17 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             }
         }
         if (bullets != null) {
-            for (Bullet bullet : bullets) {
+            for (Bullet bullet : getCopyOfBullets()) {
                 graphics.setColor(Color.BLACK);
-//                graphics.fillRect(john.getX(), john.getY(), 4, 4);
+                graphics.fillRect(bullet.getX(), bullet.getY(), 4, 4);
             }
         }
 
         if (lasers != null) {
             for (Bullet bullet : lasers) {
                 graphics.setColor(Color.GREEN);
-//                graphics.fillRect(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, 4, 6);
+                graphics.fillRect(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, 4, 6);
+                new Velocity (0, 20);
             }
         }
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
