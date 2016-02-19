@@ -46,13 +46,14 @@ public class Item {
 
             minX = 10;
             maxX = 800;
+           
 
         } else if (type.equals(ITEM_TYPE_ENEMY)) {
             image_right = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_right.png");
             image_left = ResourceTools.loadImageFromResource("spaceinvaders/tiefighter_left.png");
             width = 100;
             height = 100;
-            speed = getRandom(2, 6);
+            speed = getRandom(2, 5);
             minX = -250;
             maxX = 1200;
         } else if (type.equals(ITEM_TYPE_SHEEP)) {

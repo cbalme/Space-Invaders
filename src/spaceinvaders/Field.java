@@ -44,10 +44,18 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     private ArrayList<Bullet> lasers;
     private ArrayList<Item> items;
     private int score;
-    
-    private ArrayList<Bullet> getCopyOfBullets(){
+
+    private ArrayList<Bullet> getCopyOfBullets() {
         ArrayList<Bullet> temp = new ArrayList<>();
-        for (Bullet bullet: bullets){
+        for (Bullet bullet : bullets) {
+            temp.add(bullet);
+        }
+        return temp;
+    }
+
+    private ArrayList<Bullet> getCopyOfLasers() {
+        ArrayList<Bullet> temp = new ArrayList<>();
+        for (Bullet bullet : lasers) {
             temp.add(bullet);
         }
         return temp;
@@ -68,7 +76,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         createBarrierRange(-1, 22, 39, 22, new Color(0, 0, 128, 255), true);
         createBarrierRange(39, 0, 39, 22, new Color(0, 0, 128, 255), true);
         bullets = new ArrayList<>();
-//        lasers = new ArrayList<>();
+        lasers = new ArrayList<>();
         items = new ArrayList<>();
         items.add(new Item(140, 310, Item.ITEM_TYPE_COW, this));
         items.add(new Item(280, 310, Item.ITEM_TYPE_COW, this));
@@ -112,15 +120,29 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
             for (Bullet bullet : getCopyOfBullets()) {
                 bullet.move();
-                
-                if ((bullet.getX() < 0) || 
-                    (bullet.getX() > this.getWidth()) || 
-                    (bullet.getY() < 0) || 
-                    (bullet.getY() > this.getHeight())){
+
+                if ((bullet.getX() < 0)
+                        || (bullet.getX() > this.getWidth())
+                        || (bullet.getY() < 0)
+                        || (bullet.getY() > this.getHeight())) {
                     bulletsToRemove.add(bullet);
                 }
             }
             bullets.removeAll(bulletsToRemove);
+        }
+        if (lasers != null) {
+            ArrayList<Bullet> lasersToRemove = new ArrayList<>();
+            for (Bullet bullet : getCopyOfLasers()) {
+                bullet.move();
+
+                if ((bullet.getX() < 0)
+                        || (bullet.getX() > this.getWidth())
+                        || (bullet.getY() < 0)
+                        || (bullet.getY() > this.getHeight())) {
+                    lasersToRemove.add(bullet);
+                }
+            }
+            lasers.removeAll(lasersToRemove);
         }
 
         if (items != null) {
@@ -176,8 +198,6 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     public void keyPressedHandler(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) {
             moveFarmer(7, Direction.LEFT);
-            
-//            AnimatedImageManager.RUN_LEFT_IMAGE_NAMES;
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             moveFarmer(7, Direction.RIGHT);
         }
@@ -252,15 +272,17 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
         if (lasers != null) {
             for (Bullet bullet : lasers) {
-                graphics.setColor(Color.GREEN);
-                graphics.fillRect(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, 4, 6);
-                new Velocity (0, 20);
+                graphics.setColor(Color.RED);
+                graphics.fillRect(bullet.getX(), bullet.getY(), 4, 6);
             }
         }
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
         graphics.setColor(Color.RED);
         graphics.drawString("SCORE: " + score++, 7, 25);
-    }
+        
+        graphics.setFont(new Font("Calibri", Font.BOLD, 24));
+        graphics.setColor(Color.RED);
+        graphics.drawString("HEALTH: " + 100, 7, 50);    }
 
 //<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">
     @Override
