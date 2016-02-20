@@ -8,6 +8,8 @@ package spaceinvaders;
 import environment.Direction;
 import environment.Velocity;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
  *
@@ -35,6 +37,20 @@ public class Bullet {
     private int y;
     private int speed;
     private final Velocity velocity;
+
+    /**
+     * @return the location
+     */
+    public Rectangle getHitBox() {
+        return new Rectangle(x, y, 4, 4);
+    }
+
+    /**
+     * @return the location
+     */
+    public Point getLocation() {
+        return new Point(x, y);
+    }
 
     /**
      * @return the x

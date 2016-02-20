@@ -116,62 +116,66 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
     @Override
     public void timerTaskHandler() {
-        if (bullets != null) {
-            ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
-            for (Bullet bullet : getCopyOfBullets()) {
-                bullet.move();
+        if ((john != null) && (john.isAlive())) {
 
-                if ((bullet.getX() < 0)
-                        || (bullet.getX() > this.getWidth())
-                        || (bullet.getY() < 0)
-                        || (bullet.getY() > this.getHeight())) {
-                    bulletsToRemove.add(bullet);
+            if (bullets != null) {
+                ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
+                for (Bullet bullet : getCopyOfBullets()) {
+                    bullet.move();
+
+                    if ((bullet.getX() < 0)
+                            || (bullet.getX() > this.getWidth())
+                            || (bullet.getY() < 0)
+                            || (bullet.getY() > this.getHeight())) {
+                        bulletsToRemove.add(bullet);
+                    }
+                }
+                bullets.removeAll(bulletsToRemove);
+            }
+            if (lasers != null) {
+                ArrayList<Bullet> lasersToRemove = new ArrayList<>();
+                for (Bullet bullet : getCopyOfLasers()) {
+                    bullet.move();
+
+                    if ((bullet.getX() < 0)
+                            || (bullet.getX() > this.getWidth())
+                            || (bullet.getY() < 0)
+                            || (bullet.getY() > this.getHeight())) {
+                        lasersToRemove.add(bullet);
+                    }
+                }
+                lasers.removeAll(lasersToRemove);
+            }
+
+            if (items != null) {
+                for (Item item : getItems()) {
+                    item.move();
+
+                    if (item.getType().equals(Item.ITEM_TYPE_ENEMY)) {
+                        if ((lasers != null) && (Math.random() < .02)) {
+                            lasers.add(new Bullet(item.getX() + 34, item.getY() + 61,
+                                    TrigonometryCalculator.calculateVelocity(item.getLocation(), john.getLocation(), 15)));
+                            AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
+                        }
+                    }
                 }
             }
-            bullets.removeAll(bulletsToRemove);
-        }
-        if (lasers != null) {
-            ArrayList<Bullet> lasersToRemove = new ArrayList<>();
-            for (Bullet bullet : getCopyOfLasers()) {
-                bullet.move();
 
-                if ((bullet.getX() < 0)
-                        || (bullet.getX() > this.getWidth())
-                        || (bullet.getY() < 0)
-                        || (bullet.getY() > this.getHeight())) {
-                    lasersToRemove.add(bullet);
-                }
+            checkIntersections();
+
+            if (Math.random() < .01) {
+                Item.playSound(Item.ITEM_TYPE_ENEMY);
             }
-            lasers.removeAll(lasersToRemove);
-        }
-
-        if (items != null) {
-            for (Item item : getItems()) {
-                item.move();
+            if (Math.random() < .001) {
+                Item.playSound(Item.ITEM_TYPE_SHEEP);
+            }
+            if (Math.random() < .001) {
+                Item.playSound(Item.ITEM_TYPE_COW);
+            }
+            if (Math.random() < .001) {
+                AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
             }
         }
-        if ((lasers != null) && (Math.random() < .01)) {
-            lasers.add(new Bullet(getTieFighterLocation().x + 34, getTieFighterLocation().y + 61, new Velocity(0, 20)));
-            AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
-        }
-        if ((lasers != null) && (Math.random() < .01)) {
-            lasers.add(new Bullet(getTieFighterLocation().x + 49, getTieFighterLocation().y + 61, new Velocity(0, 20)));
-            AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
-        }
-
-        if (Math.random() < .01) {
-            Item.playSound(Item.ITEM_TYPE_ENEMY);
-        }
-        if (Math.random() < .001) {
-            Item.playSound(Item.ITEM_TYPE_SHEEP);
-        }
-        if (Math.random() < .01) {
-            Item.playSound(Item.ITEM_TYPE_COW);
-        }
-        if (Math.random() < .001) {
-            AudioPlayer.play("/spaceinvaders/TIE-Fly7.wav");
-        }
-
     }
 
     private Point getTieFighterLocation() {
@@ -200,6 +204,9 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
             moveFarmer(7, Direction.LEFT);
         } else if (e.getKeyCode() == KeyEvent.VK_D) {
             moveFarmer(7, Direction.RIGHT);
+        } else if (e.getKeyCode() == KeyEvent.VK_R) {
+            john.setHealth(100);
+            john.setMoveState(AnimationState.STAND_LEFT);
         }
     }
 
@@ -224,14 +231,38 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
     }
 
     private void checkIntersections() {
-        Point johnLocation = grid.getCellLocationFromSystemCoordinate(john.getCenterOfMass());
-        System.out.println("John Location " + johnLocation);
-
-        for (Barrier barrier : barriers) {
-            if (barrier.getLocation().equals(johnLocation)) {
-                System.out.println("HIT BARRIER");
+        //check if any of the bullets are hitting the tiefighters..
+        if ((items != null) && (bullets != null)) {
+            for (Bullet bullet : getCopyOfBullets()) {
+                for (Item item : items) {
+                    if (item.getType().equals(Item.ITEM_TYPE_ENEMY)) {
+                        if (bullet.getHitBox().intersects(item.getHitBox())) {
+                            // get rid of laser
+                            bullet.setY(100000);
+                            // subtract 10 health
+                            item.addHealth(-10);
+                            //make mechancal crunch
+                            AudioPlayer.play("/spaceinvaders/Bomb.wav");
+                        }
+                    }
+                }
             }
         }
+
+        //check if ANY of the lasers are hitting johnny
+        if ((john != null) && (lasers != null)) {
+            for (Bullet laser : lasers) {
+                if (laser.getHitBox().intersects(john.getHitBox())) {
+                    // get rid of laser
+                    laser.setY(100000);
+                    // subtract 10 health
+                    john.addHealth(-10);
+                    //make scream
+                    AudioPlayer.play("/spaceinvaders/ohh.wav");
+                }
+            }
+        }
+
     }
 
     @Override
@@ -256,11 +287,19 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
 
         if (john != null) {
             john.draw(graphics);
+            if (!john.isAlive()) {
+                graphics.setFont(new Font("Calibri", Font.BOLD, 50));
+                graphics.drawString("John be ded", 400, 400);
+                graphics.drawString("Press 'R' to play again", 400, 475);
+            }
         }
 
         if (items != null) {
             for (Item item : getItems()) {
                 item.draw(graphics);
+//                if (!() {
+//                    
+//                }
             }
         }
         if (bullets != null) {
@@ -271,18 +310,19 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
         }
 
         if (lasers != null) {
-            for (Bullet bullet : lasers) {
-                graphics.setColor(Color.RED);
+            for (Bullet bullet : getCopyOfLasers()) {
+                graphics.setColor(Color.GREEN);
                 graphics.fillRect(bullet.getX(), bullet.getY(), 4, 6);
             }
         }
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
         graphics.setColor(Color.RED);
         graphics.drawString("SCORE: " + score++, 7, 25);
-        
+
         graphics.setFont(new Font("Calibri", Font.BOLD, 24));
         graphics.setColor(Color.RED);
-        graphics.drawString("HEALTH: " + 100, 7, 50);    }
+        graphics.drawString("HEALTH: " + john.getHealth(), 7, 50);
+    }
 
 //<editor-fold defaultstate="collapsed" desc="CellDataProviderIntf">
     @Override

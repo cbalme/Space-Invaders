@@ -10,6 +10,8 @@ import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -28,14 +30,16 @@ public class Item {
 
         minX = -100;
         maxX = 1000; 
-
+        health = 100;
     }
     public Item(int x, int y, String type, CellDataProviderIntf cellData) {
         this.x = x;
         this.y = y;
         this.type = type;
         this.image_left = image_left;
+        this.image_right = image_right;
         this.cellData = cellData;
+        
 
         if (type.equals(ITEM_TYPE_COW)) {
             image_left = ResourceTools.loadImageFromResource("spaceinvaders/cow_left.png");
@@ -71,7 +75,8 @@ public class Item {
     private int getRandom(int min, int max) {
         return (int) (min + (max - min + 1) * (Math.random()));
     }
-
+    private int health;
+    
     public void move() {
         if (direction == Direction.LEFT) {
             x -= speed;
@@ -112,6 +117,10 @@ public class Item {
                 y += speed;
             }
         }
+    }
+    
+    public boolean isAlive() {
+        return (getHealth() >0 );
     }
 
     public static void playSound(String type) {
@@ -233,6 +242,28 @@ public class Item {
      */
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    /**
+     * @return the health
+     */
+    public int getHealth() {
+        return health;
+    }
+
+    /**
+     * @param health the health to set
+     */
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public Rectangle getHitBox() {
+        return new Rectangle(x, y, width, height);
+    }
+
+    public void addHealth(int health) {
+        this.health += health;
     }
 }
 //</editor-fold>

@@ -13,6 +13,7 @@ import images.ResourceTools;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import static spaceinvaders.AnimatedImageManager.RUN_LEFT_IMAGE_NAMES;
 import static spaceinvaders.AnimatedImageManager.RUN_RIGHT_IMAGE_NAMES;
 import static spaceinvaders.AnimatedImageManager.STAND_LEFT_IMAGE_NAMES;
@@ -52,10 +53,13 @@ public class FarmerJohn {
     }
 
     public void draw(Graphics graphics) {
-
         graphics.drawImage(getImage(), getX(), getY(), null);
-
     }
+
+    public Rectangle getHitBox() {
+        return new Rectangle(x, y, getImage().getWidth(null), getImage().getHeight(null));
+    }
+//                }
     private static String STAND_LEFT = "STAND_LEFT";
     private static String STAND_RIGHT = "STAND_RIGHT";
     private static String RUN_RIGHT = "STAND_RIGHT";
@@ -114,6 +118,10 @@ public class FarmerJohn {
     private int health;
     private AnimationState moveState;
 
+    public boolean isAlive() {
+        return (health > 0);
+    }
+
     /**
      * @return the direction
      */
@@ -126,7 +134,7 @@ public class FarmerJohn {
      */
     public void setDirection(Direction direction) {
         this.direction = direction;
-        
+
         if (direction == Direction.LEFT) {
             setMoveState(AnimationState.RUN_LEFT);
         } else {
@@ -146,22 +154,21 @@ public class FarmerJohn {
      */
     public void setSpeed(int speed) {
         this.speed = speed;
-        
-        if (speed <= 0){
+
+        if (speed <= 0) {
             if (direction == Direction.LEFT) {
                 setMoveState(AnimationState.STAND_LEFT);
             } else {
                 setMoveState(AnimationState.STAND_RIGHT);
             }
+        } else if (direction == Direction.LEFT) {
+            setMoveState(AnimationState.RUN_LEFT);
         } else {
-            if (direction == Direction.LEFT) {
-                setMoveState(AnimationState.RUN_LEFT);
-            } else {
-                setMoveState(AnimationState.RUN_RIGHT);
-            }
+            setMoveState(AnimationState.RUN_RIGHT);
         }
-            
+
     }
+
     /**
      * @return the x
      */
@@ -232,6 +239,10 @@ public class FarmerJohn {
      */
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public void addHealth(int health) {
+        this.health += health;
     }
 
     /**
