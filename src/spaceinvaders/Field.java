@@ -152,7 +152,7 @@ public class Field extends Environment implements CellDataProviderIntf, MoveVali
                     item.move();
 
                     if (item.getType().equals(Item.ITEM_TYPE_ENEMY)) {
-                        if ((lasers != null) && (Math.random() < .02)) {
+                        if ((lasers != null) && (Math.random() < .01)) {
                             lasers.add(new Bullet(item.getX() + 34, item.getY() + 61,
                                     TrigonometryCalculator.calculateVelocity(item.getLocation(), john.getLocation(), 15)));
                             AudioPlayer.play("/spaceinvaders/TIE-Fire.wav");
